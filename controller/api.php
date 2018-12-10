@@ -96,28 +96,28 @@ class Controller_Api extends Controller {
      * 'https://www.instagram.com/p/BprckGJBJ2E/' - image
      * 'https://www.instagram.com/p/Bq4gXMhhoZi/' - collection
      * 'https://www.instagram.com/p/BgbLcqtnMPy/' - video
-     * 'https://www.instag1ram.com/p/BrNBVs5AzNJ/' - collection video and images
+     * 'https://www.instagram.com/p/BrNBVs5AzNJ/' - collection video and images
      */
 
-    $url = 'https://www.instagram.com/p/BrNBVs5AzNJ/'; // Альбом видео и фото
-
-
+    $url = Request::getStr('instagramMediaPageUrl');
     //preg_match("/https?:\/\/(www\.)?instagram\.com\/([^\/].+)/", $url, $matches);
-    if (preg_match('/^https\:\/\/www\.instagram\.com\//is', $url)) :
-      $response = self::getInfoPage($url);
+    if (!empty($url) && preg_match('/^https\:\/\/www\.instagram\.com\//is', $url)) :
+      $response = self::getInstagramPage($url);
       $object_data = $response->graphql->shortcode_media;
       $media = array();
 
-      if (!empty($object_data->is_video)) {
-        $media[] = $object_data->video_url;
+      if (empty($object_data->edge_sidecar_to_children)) {
+        $media[] = array(
+          'isVideo' => $object_data->is_video,
+          'url'     => (!empty($object_data->is_video)) ? $object_data->video_url : $object_data->display_url,
+        );$object_data->display_url;
       } else {
-        if (empty($object_data->edge_sidecar_to_children)) {
-          $media[] = $object_data->display_url;
-        } else {
-          $children = $object_data->edge_sidecar_to_children->edges;
-          foreach ($children as $item) {
-            $media[] = (!empty($item->node->is_video)) ? $item->node->video_url : $item->node->display_url;
-          }
+        $children = $object_data->edge_sidecar_to_children->edges;
+        foreach ($children as $item) {
+          $media[] = array(
+            'isVideo' => $item->node->is_video,
+            'url'     => (!empty($item->node->is_video)) ? $item->node->video_url : $item->node->display_url,
+          );
         }
       }
 
@@ -127,8 +127,8 @@ class Controller_Api extends Controller {
         'owner_id'    => !empty($object_data->owner->id) ? $object_data->owner->id : '',
         'owner_login' => !empty($object_data->owner->username) ? $object_data->owner->username : '',
         'full_name'   => !empty($object_data->owner->full_name) ? $object_data->owner->full_name : '',
-        'title'       => !empty($object_data->edge_media_to_caption->edges[0]->node->text) ? $object_data->edge_media_to_caption->edges[0]->node->text : '',
-        'media'       => $media,
+        'caption'     => !empty($object_data->edge_media_to_caption->edges[0]->node->text) ? $object_data->edge_media_to_caption->edges[0]->node->text : '',
+        'medias'      => $media,
         'taken_at_timestamp' => !empty($object_data->taken_at_timestamp) ? $object_data->taken_at_timestamp : '',
       );
 
@@ -137,7 +137,7 @@ class Controller_Api extends Controller {
       );
       $this->response($result);
     else :
-      $this->errorResponse(self::E_INVALID_PARAMETER_VALUE);
+      $this->errorResponse(self::E_INVALID_PARAMETER_VALUE, array(':param' => 'url'), 400);
     endif;
   }
 
@@ -176,7 +176,7 @@ class Controller_Api extends Controller {
     }
   }
 
-  private function getInfoPage($url) {
+  private function getInstagramPage($url) {
     $url .= ((substr($url, -1) != '/') ? '/' : '') . '?__a=1';
 
     $ch = curl_init();

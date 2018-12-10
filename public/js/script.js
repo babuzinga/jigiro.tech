@@ -18,8 +18,9 @@
         data: {
           instagramMediaPageUrl: media_page_url
         },
-        success: function(result) {
-          var html = template(result);
+        success: function(obj) {
+          console.log(obj.info);
+          var html = template(obj.info);
 
           $('#error').hide();
           $('#media-container').html(html);

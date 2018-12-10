@@ -26,6 +26,8 @@
   <script src="/public/js/jquery-ui-1.11.4.min.js"></script>
   <script src="/public/js/script.js"></script>
   <script src="/public/js/less.min.js" type="text/javascript"></script>
+  {* https://handlebarsjs.com/expressions.html *}
+  <script src="/public/js/handlebars-v4.0.12.js" type="text/javascript"></script>
 </head>
 
 <body>
