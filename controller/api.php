@@ -100,7 +100,6 @@ class Controller_Api extends Controller {
      */
 
     $url = Request::getStr('instagramMediaPageUrl');
-    //preg_match("/https?:\/\/(www\.)?instagram\.com\/([^\/].+)/", $url, $matches);
     if (!empty($url) && preg_match('/^https\:\/\/www\.instagram\.com\//is', $url)) :
       $response = self::getInstagramPage($url);
       $object_data = $response->graphql->shortcode_media;
@@ -129,7 +128,7 @@ class Controller_Api extends Controller {
         'full_name'   => !empty($object_data->owner->full_name) ? $object_data->owner->full_name : '',
         'caption'     => !empty($object_data->edge_media_to_caption->edges[0]->node->text) ? $object_data->edge_media_to_caption->edges[0]->node->text : '',
         'medias'      => $media,
-        'taken_at_timestamp' => !empty($object_data->taken_at_timestamp) ? $object_data->taken_at_timestamp : '',
+        'timestamp'   => !empty($object_data->taken_at_timestamp) ? $object_data->taken_at_timestamp : '',
       );
 
       $result = array(
