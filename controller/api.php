@@ -84,7 +84,8 @@ class Controller_Api extends Controller {
   }
 
   /**
-   *
+   * Доработки:
+   * 1 - проверка сслыки на то что это ссылка на пост, а не на страницу профиля
    */
   public function apiGetMediaWithInstagram() {
     /**
@@ -109,7 +110,7 @@ class Controller_Api extends Controller {
         $media[] = array(
           'isVideo' => $object_data->is_video,
           'url'     => (!empty($object_data->is_video)) ? $object_data->video_url : $object_data->display_url,
-        );$object_data->display_url;
+        );
       } else {
         $children = $object_data->edge_sidecar_to_children->edges;
         foreach ($children as $item) {
