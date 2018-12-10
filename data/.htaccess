@@ -1,0 +1,5 @@
+RewriteEngine On
+RewriteBase /data/
+
+RewriteCond  %{REQUEST_FILENAME} !-f
+RewriteRule  ^cache/ cache.php

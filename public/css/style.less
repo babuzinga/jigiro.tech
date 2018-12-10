@@ -1,0 +1,213 @@
+/*
+    1 - переводить всё в em
+    https://www.google.com/fonts/#QuickUsePlace:quickUse/Script:cyrillic
+
+    про less - http://habrahabr.ru/post/136525/
+*/
+
+@background_basic: #ffffff;
+@background_section: #f5f5f5;
+@border_basic: #e2e2e2;
+
+@color_basic: #1f1e23;
+@color_basiclink: #25b3cb;
+@error_color: red;
+
+@color_design: #25b3cb;
+@color_design_light: #2ed1ec;
+@color_design_dark: #2099ae;
+@color_design_font: #1f1e23;
+
+@max_width: 600px;
+@border_radius: 0;
+
+@font-face {
+  font-family: RobotoCondensedLight;
+  src: url("/public/fonts/RobotoCondensed-Light.ttf") format('truetype');
+}
+
+@font-face {
+  font-family: RobotoCondensedRegular;
+  src: url("/public/fonts/RobotoCondensed-Regular.ttf") format('truetype');
+}
+
+@font-face {
+  font-family: RobotoCondensedBold;
+  src: url("/public/fonts/RobotoCondensed-Bold.ttf") format('truetype');
+}
+
+body, html {
+  font: 14px RobotoCondensedLight;
+  line-height: 1.7;
+  height: auto;
+  width: 100%;
+  background: @background_basic;
+}
+
+h1, h2 {
+  line-height: 40px;
+  font-weight: bold;
+  margin: 0;
+  text-transform: uppercase;
+  font-family: RobotoCondensedBold;
+  color: @color_design;
+
+  span { color: @color_design_font; }
+}
+
+h1 { font-size: 40px; }
+h2 { font-size: 30px; }
+p { margin: 0; }
+a, .link { color: @color_basiclink;  text-decoration: underline; cursor: pointer; }
+a:hover, .link:hover { text-decoration: none; }
+.error { color: @error_color; }
+
+span.underline {
+  display: inline;
+  border-bottom: 1px dotted @color_basiclink;
+  padding-bottom: 2px;
+  color: @color_basiclink;
+}
+
+pre {
+  padding: 15px;
+  overflow: auto;
+  border-radius: @border_radius;
+  margin: 20px 0;
+  font: 12px "Courier New";
+  background-color: @background_basic;
+}
+
+
+
+header {
+  background-color: @background_section;
+  display: block;
+  width: 100%;
+  height: 50px;
+
+  ul {
+    display: block;
+    max-width: @max_width;
+    margin: 0 auto;
+    padding: 0 10px;
+
+    li {
+      display: inline-block;
+      padding: 13px 0;
+      margin-right: 20px;
+      color: @color_basic;
+
+      a { text-decoration: none; }
+      a:hover { color: @color_design_light; }
+      a.active {
+        color: @color_design;
+        border-bottom: 1px solid @color_design;
+      }
+    }
+  }
+
+  ul.mobile { display: none; }
+}
+
+section {
+  padding: 0 10px;
+  display: block;
+  position: relative;
+  margin: 0 auto;
+  max-width: @max_width;
+
+  div.content {
+    color: @color_basic;
+    border: 1px solid @border_basic;
+    border-radius: @border_radius;
+    background-color: @background_section;
+    margin: 10px 0;
+
+    div.c-header {
+      background-color: @color_design;
+      color: @color_design_font;
+      padding: 5px 10px;
+      border-bottom: 1px solid @border_basic;
+
+      span {
+        display: inline-block;
+        margin-right: 15px;
+        color: @color_design_font;
+      }
+    }
+    div.c-body {
+      padding: 10px;
+    }
+  }
+  div.content.error {padding: 15px;}
+}
+
+
+
+
+
+/* ids */
+#debug {
+  position: fixed;
+  top: 8px;
+  right: 0;
+  padding: 5px 15px;
+  color: @color_design_font;
+  font-size: 12px;
+}
+/* end:ids */
+
+
+
+// https://html5book.ru/specsimvoly-html/
+.icon {
+  padding: 0;
+}
+.icon::after {
+  display: inline-block;
+  font-size: 29px;
+}
+.icon.i-menu::after {content:'\2630';cursor: pointer;}
+.icon.i-close::after {content:'\2716';cursor: pointer;}
+
+
+
+@media only screen and (max-width: 600px) {
+  header {
+    ul.desktop {
+      display: none;
+    }
+    ul.mobile {
+      display: block;
+
+      ul {
+        display: none;
+      }
+    }
+
+    ul.mobile.sub-menu {
+      .sub {
+        display: block;
+        background: @background_section;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 100;
+        padding: 0;
+
+        li {
+          display: block;
+          text-align: center;
+          margin: 0;
+        }
+        li.icon {
+          display: inline-block;
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+}

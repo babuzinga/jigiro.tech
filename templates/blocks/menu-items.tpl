@@ -1,0 +1,2 @@
+<li><a href="{$host_name}"{if !empty($current_controller) && $current_controller eq index} class="active"{/if}>Index</a></li>
+{*<li><a href="{$host_name}/note/"{if !empty($current_controller) && $current_controller eq note} class="active"{/if}>Ajax</a></li>*}
