@@ -1,28 +1,28 @@
 {literal}
   <!-- Mustache template -->
   <script id="media-template" type="text/x-handlebars-template">
-    <div class="row">
+    <div>
       <div>
-        <span id="owner" class="owner-name">@{{owner_login}}</span>
+        <span id="insta-owner" class="owner-name">@{{owner_login}}</span>
       </div>
       <div>
-        <span onclick="copyToClipboard('#owner')" class="link">Копировать автора</span>
+        <span onclick="copyToClipboard('#insta-owner')" class="link">Копировать автора</span>
         &mdash;
         <a href="https://www.instagram.com/{{owner_login}}" target="_blank">Открыть страницу</a>
       </div>
     </div>
 
-    <div class="row">
+    <div>
       <div>
-        <p id="caption">{{caption}}</p>
+        <p id="insta-caption">{{caption}}</p>
       </div>
       <div>
-        <span onclick="copyToClipboard('#caption')" class="link">Копировать описание</span>
+        <span onclick="copyToClipboard('#insta-caption')" class="link">Копировать описание</span>
       </div>
     </div>
 
     {{#each medias}}
-    <div class="row">
+    <div>
       <div>
         <a href="{{this.url}}" download>Скачать</a>
         &mdash;

@@ -4,8 +4,8 @@ define('DEV_MODE',          true);
 define('PROTOCOL',          'http://');
 define('HOST_NAME',         'www.basic.local');
 define('HOST_TYPE',         'local');
-define('PROJECT_NAME',      'BASIC');
-define('PROJECT_NAME_FULL', 'BASIC Template');
+define('PROJECT_NAME',      'JIGIRO');
+define('PROJECT_NAME_FULL', 'JIGIRO.TECH [ sercices project 2018 ]');
 
 define('DB_DATABASE',       'project');
 define('DB_USER',           'root');

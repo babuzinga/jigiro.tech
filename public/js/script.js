@@ -1,72 +1,52 @@
 ﻿$().ready(function(){
-  $(window).load(function () {
-
-  });
-
-
-
-
-
-  $(document).ready(function () {
-    var source   = $("#media-template").html();
-    var template = Handlebars.compile(source);
-
-    $('#submit_button').on("click", function(event) {
-      var media_page_url = $('#instagram_media_page_url').val(),
-          $preloader = $('#preloader');
-      if (!media_page_url) {
-        $('#error').show().html('Укажите ссылку на пост в Instagram');
-        return false;
-      }
-
-      $(this).hide();
-      $preloader.show();
-
-      $.ajax({
-        url: "/api/media",
-        data: {
-          instagramMediaPageUrl: media_page_url
-        },
-        success: function(obj) {
-          // var obj = $.parseJSON(data);
-
-          console.log(obj);
-          var html = template(obj.info);
-
-          $('#error').hide();
-          $('#media-container').html(html);
-          $('#success').show();
-        },
-        error: function (error) {
-          console.log(error.responseJSON);
-          var error = error.responseJSON.description;
-
-          $('#error').show().html(error);
-          $('#success').hide();
-        }
-      });
-
-      $(this).show();
-      $preloader.hide();
-    });
-  });
-
-
-
-
-
-  $(window).on("scroll", function() {
-
-  });
-
-
-
-
-
-  $(window).on("resize", function() {
-
-  });
+  $(window).load(function () {   });
+  $(document).ready(function () {   });
+  $(window).on("scroll", function() {   });
+  $(window).on("resize", function() {   });
 });
+
+
+
+function uploadMediaInsta() {
+  var source   = $("#media-template").html(),
+      template = Handlebars.compile(source),
+      media_page_url = $('#instagram_media_page_url').val(),
+      $submit_button = $('#submit_button'),
+      $preloader = $('#preloader');
+
+  if (!media_page_url) {
+    $('#error').show().html('Укажите ссылку на пост в Instagram');
+    return false;
+  }
+
+  $submit_button.hide();
+  $preloader.show();
+
+  $.ajax({
+    url: "/api/media",
+    data: {
+      instagramMediaPageUrl: media_page_url
+    },
+    success: function(obj) {
+      // var obj = $.parseJSON(data);
+      var html = template(obj.info);
+
+      $('#error').hide();
+      $('#media-container').html(html);
+      $('#success').show();
+    },
+    error: function (error) {
+      console.log(error.responseJSON);
+      var error = error.responseJSON.description;
+
+      $('#error').show().html(error);
+      $('#success').hide();
+    }
+  });
+
+  $submit_button.show();
+  $preloader.hide();
+}
 
 function copyToClipboard(element) {
   var $temp = $("<textarea>");

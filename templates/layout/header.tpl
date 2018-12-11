@@ -30,19 +30,21 @@
   <script src="/public/js/handlebars-v4.0.12.js" type="text/javascript"></script>
 </head>
 
+{* https://html5book.ru/html-tags/ *}
 <body>
-  <header>
-    <ul class="desktop">
-      {include file="blocks/menu-items.tpl"}
-    </ul>
+  <main>
+    <header>
+      <ul class="desktop">
+        {include file="blocks/menu-items.tpl"}
+      </ul>
 
-    <ul class="mobile">
-      <li class="icon i-menu" onclick="$('.mobile').toggleClass('sub-menu')"></li>
-      <li>
-        <ul class="sub">
-          <li class="icon i-close" onclick="$('.mobile').toggleClass('sub-menu')"></li>
-          {include file="blocks/menu-items.tpl"}
-        </ul>
-      </li>
-    </ul>
-  </header>
+      <ul class="mobile">
+        <li class="icon i-menu" onclick="$('.mobile').toggleClass('sub-menu')"></li>
+        <li>
+          <ul class="sub">
+            <li class="icon i-close" onclick="$('.mobile').toggleClass('sub-menu')"></li>
+            {include file="blocks/menu-items.tpl"}
+          </ul>
+        </li>
+      </ul>
+    </header>

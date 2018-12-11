@@ -4,25 +4,26 @@
   <div class="content">
     <h1>Скачать изображения и видео из <span>Instagram</span></h1>
     <br/>
-    <form>
+    <form onsubmit="uploadMediaInsta(); return false;">
       <p>
         Сервис позваляет скачать фото и видео из Instagram онлайн. Для скачивания
-        необхоимо указать ссылку на пост в Instagram, нажать кнопку &laquo;Загрузить&raquo; и
+        необходимо указать ссылку на пост в Instagram, нажать кнопку &laquo;Загрузить&raquo; и
         получить нужные фотографии или видео. Скачивание бесплатно и не требует регистарции.
       </p>
       <br/>
+      <div id="double-click" ondblclick=""></div>
       <input
         type="text"
         placeholder="Ссылка на пост в Instagram"
         id="instagram_media_page_url"
         class="form-control"
-        value="https://www.instagram.com/p/BprckGJBJ2E/"
+        value=""
         size="50"
         >
       <button
         type="button"
         id="submit_button"
-        class="btn btn-success"
+        onclick="uploadMediaInsta()"
         >Загрузить</button>
     </form>
 
@@ -31,16 +32,12 @@
       <div class="double-bounce2"></div>
     </div>
 
-    <div id="error" style="display: none">
+    <div id="error" style="display: none; color: red; margin: 20px 0;">
 
     </div>
     <div id="success" style="display:none;">
       <div id="media-container"></div>
     </div>
-
-    <br/>
-    <br/>
-    &copy; babyzinga
   </div>
 
   {include file="handlebars/media-template.tpl"}

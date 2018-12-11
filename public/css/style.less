@@ -39,7 +39,7 @@
 body, html {
   font: 14px RobotoCondensedLight;
   line-height: 1.7;
-  height: auto;
+  height: 100%;
   width: 100%;
   background: @background_basic;
 }
@@ -110,6 +110,16 @@ header {
   ul.mobile { display: none; }
 }
 
+
+
+main {
+  min-height: 100%;
+  box-sizing: border-box;
+  padding-bottom: 45px;
+}
+
+
+
 section {
   padding: 0 10px;
   display: block;
@@ -118,10 +128,17 @@ section {
   max-width: @max_width;
 
   div.content {
-    margin: 20px 0;
+    padding: 20px 0;
   }
 
-  .row {
+  #double-click {
+    width: 100%;
+    height: 100px;
+    background: #f2f2f2;
+    margin: 10px 0;
+    border-radius: 7px;
+  }
+  #media-template > div {
     margin: 10px 0;
     border-bottom: 1px solid @border_basic;
     padding: 0 0 10px 0;
@@ -131,7 +148,21 @@ section {
   }
 }
 
-
+footer {
+  height: 45px;
+  background-color: @border_basic;
+  color: @color_basic;
+  padding: 10px 0;
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  margin-top: -45px;
+  > div {
+    margin: 0 auto;
+    max-width: @max_width;
+    padding: 0 10px;
+  }
+}
 
 
 
