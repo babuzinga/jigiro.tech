@@ -19,15 +19,18 @@
           instagramMediaPageUrl: media_page_url
         },
         success: function(obj) {
-          console.log(obj.info);
+          console.log(obj);
           var html = template(obj.info);
 
           $('#error').hide();
           $('#media-container').html(html);
           $('#success').show();
         },
-        error: function (ajaxContext) {
-          $('#error').show();
+        error: function (error) {
+          console.log(error.responseJSON);
+          var error = error.responseJSON.description;
+
+          $('#error').show().html(error);
           $('#success').hide();
         }
       });
@@ -50,3 +53,15 @@
 
   });
 });
+
+function copyToClipboard(element) {
+  var $temp = $("<textarea>");
+  $("body").append($temp);
+  $temp.val($(element).text()).select();
+  document.execCommand("copy");
+  $temp.remove();
+}
+
+function saveMedia(type, url) {
+
+}
