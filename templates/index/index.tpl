@@ -26,6 +26,11 @@
         >Загрузить</button>
     </form>
 
+    <div class="spinner" id="preloader">
+      <div class="double-bounce1"></div>
+      <div class="double-bounce2"></div>
+    </div>
+
     <div id="error" style="display: none">
 
     </div>

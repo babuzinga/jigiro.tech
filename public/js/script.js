@@ -12,7 +12,16 @@
     var template = Handlebars.compile(source);
 
     $('#submit_button').on("click", function(event) {
-      var media_page_url = $('#instagram_media_page_url').val()
+      var media_page_url = $('#instagram_media_page_url').val(),
+          $preloader = $('#preloader');
+      if (!media_page_url) {
+        $('#error').show().html('Укажите ссылку на пост в Instagram');
+        return false;
+      }
+
+      $(this).hide();
+      $preloader.show();
+
       $.ajax({
         url: "/api/media",
         data: {
@@ -36,6 +45,9 @@
           $('#success').hide();
         }
       });
+
+      $(this).show();
+      $preloader.hide();
     });
   });
 
