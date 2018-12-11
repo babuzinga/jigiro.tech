@@ -19,6 +19,8 @@
           instagramMediaPageUrl: media_page_url
         },
         success: function(obj) {
+          // var obj = $.parseJSON(data);
+
           console.log(obj);
           var html = template(obj.info);
 
