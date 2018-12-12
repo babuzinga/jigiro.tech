@@ -17,6 +17,8 @@ class View {
     $this->renderer->assign("host_name", PROTOCOL . HOST_NAME);
     $this->renderer->assign("project_name", PROJECT_NAME_FULL);
 
+    $this->renderer->assign('smartphone', isSmartPhone());
+
     if (defined("CURRENT_CONTROLLER_NAME")) $this->renderer->assign('current_controller', CURRENT_CONTROLLER_NAME);
     if (defined("CURRENT_METHOD_NAME"))     $this->renderer->assign('current_method', CURRENT_METHOD_NAME);
   }

@@ -200,7 +200,8 @@ class Controller_Api extends Controller {
   }
 
   private function getInstagramPage($url) {
-    $url .= ((substr($url, -1) != '/') ? '/' : '') . '?__a=1';
+    $parse = parse_url($url);
+    $url .= ((substr($url, -1) != '/') ? '/' : '') . (!empty($parse['query']) ? '&' : '?') . '__a=1';
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);

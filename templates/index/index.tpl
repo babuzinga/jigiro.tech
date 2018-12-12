@@ -38,6 +38,21 @@
     <div id="success" style="display:none;">
       <div id="media-container"></div>
     </div>
+
+    <br/>
+    <br/>
+    <br/>
+    <div class="ins-share">
+      <span>Рассказать друзьям, как копировать фото, видео и текст из Instagram</span>
+      {include
+        inline file="blocks/ya-share.tpl"
+        id_share="ins-share"
+        smartphone=$smartphone
+        title="На сайте Jigiro.tech вы можете скопировать текст, скачать фото и видео из Instagram онлайн."
+        description=""
+        image=""
+      }
+    </div>
   </div>
 
   {include file="handlebars/media-template.tpl"}

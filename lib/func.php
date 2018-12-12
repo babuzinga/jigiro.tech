@@ -51,3 +51,7 @@ function ajax($str) {
   echo $str;
   exit;
 }
+
+function isSmartPhone() {
+  return preg_match('/(?:tablet|ipad|ipod|mobile|mini|phone|symbian|android|ios|blackberry|webos)/', strtolower($_SERVER['HTTP_USER_AGENT']));
+}
