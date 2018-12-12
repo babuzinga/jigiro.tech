@@ -1,7 +1,7 @@
 <div
   id="{if empty($id_share)}the_share{else}{$id_share}{/if}"
   class="ya-share2"
-  data-services="vkontakte,facebook,odnoklassniki,moimir,twitter{if isset($google_plus)},gplus{/if}{if !empty($mobile)},telegram,viber,whatsapp{/if}"
+  data-services="vkontakte,facebook,odnoklassniki,moimir,twitter{if isset($google_plus)},gplus{/if}{if !empty($smartphone)},telegram,viber,whatsapp{/if}"
   ></div>
 
 {* https://tech.yandex.ru/share/doc/dg/add-docpage/ *}
