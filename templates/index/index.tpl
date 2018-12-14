@@ -19,6 +19,7 @@
         class="form-control"
         value=""
         size="50"
+        onclick="this.select();"
         >
       <button
         type="button"
