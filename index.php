@@ -19,6 +19,8 @@ include 'lib/smarty3/Smarty.class.php';
 
 DB::connect(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
 
+Controller_User::rememberMe();
+
 // TODO --- http://php.net/manual/ru/language.exceptions.php
 // Если переданны данные
 try {

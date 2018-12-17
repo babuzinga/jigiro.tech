@@ -8,10 +8,10 @@ class View {
     $this->renderer = new Smarty();
 
     // присваиваем глобальные переменные
-    $this->renderer->assign('title', "Заголовок");
-    $this->renderer->assign('description', "Описание");
-    $this->renderer->assign('keywords', "Ключевые слова");
-    $this->renderer->assign('author', "Автор");
+    $this->renderer->assign('title', PROJECT_NAME);
+    $this->renderer->assign('description', PROJECT_NAME_FULL);
+    $this->renderer->assign('keywords', 'скачать фотографию из Instagram, скачать видео из Instagram, бесплатно скачать из Instagram');
+    $this->renderer->assign('author', '');
 
     $this->renderer->assign('localhost', HOST_TYPE == 'local');
     $this->renderer->assign("host_name", PROTOCOL . HOST_NAME);

@@ -89,14 +89,44 @@ function checkDirs($fn) {
   umask($oldumask);
 }
 
-function instr($str, $substr) {
-  return is_int(strpos($str, $substr));
+function Redirect($url, $code = 302) {
+  if (substr($url, 0, 5) != 'http:' && substr($url, 0, 6) != 'https:') $url = PROTOCOL . HOST_NAME . $url;
+  header("Location: $url", true, $code);
+  exit;
 }
 
 
 
 
 
+function setCurrentUser($profile) {
+  begin_session();
+  $_SESSION['current_user_id']      = $profile->id;
+  $GLOBALS['runtime_current_user']  = $profile;
+}
+
+function begin_session() {
+  if (!isset($_SESSION) && empty($_REQUEST[session_name()])) my_start_session();
+}
+
+function my_start_session() {
+  if (!isset($_COOKIE[session_name()])) {
+    session_id(md5(rand(0, 999999) . $_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT'] . microtime(false)));
+    $GLOBALS['session_read_return'] = '';
+  }
+  if (!isset($_SESSION)) session_start();
+  setcookie(session_name(), session_id(), time() + 86400*10, '/', COOKIE_DOMAIN, false, true);
+}
+
+function hasSessionUser() {
+  return isset($_SESSION['current_user_id']);
+}
+
+function unsetCurrentUser() {
+  if (isset($_SESSION['current_user_id'])) unset($_SESSION['current_user_id']);
+  unset($GLOBALS['runtime_current_user']);
+}
+
 function getCurrentUser() {
-  return new Model_Profile(1); //$GLOBALS['runtime_current_user'];
+  return $GLOBALS['runtime_current_user'];
 }

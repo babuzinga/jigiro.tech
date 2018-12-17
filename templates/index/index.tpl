@@ -32,7 +32,7 @@
       <div class="double-bounce2"></div>
     </div>
 
-    <div id="error" style="display: none; color: red; margin: 20px 0;">
+    <div id="error" class="error hidden">
 
     </div>
     <div id="success" style="display:none;">

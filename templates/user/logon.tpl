@@ -5,6 +5,12 @@
     <h1>Авторизация</h1>
     <br/>
     <form action="{$host_name}/user/logon" method="post">
+      {if !empty($error)}
+        <div class="error">
+          {$error}
+        </div>
+      {/if}
+
       <label>
         Имя
         <input class="form-text" type="text" value="" name="login">
