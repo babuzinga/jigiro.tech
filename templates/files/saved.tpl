@@ -7,7 +7,7 @@
       <br/>
       <div id="media-container">
         {foreach $medias as $media}
-          {include file="saved/media.tpl"}
+          {include file="files/media.tpl"}
         {/foreach}
       </div>
     {else}

@@ -106,15 +106,15 @@ function setCurrentUser($profile) {
 }
 
 function begin_session() {
-  if (!isset($_SESSION) && empty($_REQUEST[session_name()])) my_start_session();
+  if (empty($_SESSION)) my_start_session();
 }
 
 function my_start_session() {
-  if (!isset($_COOKIE[session_name()])) {
+  if (empty($_COOKIE[session_name()])) {
     session_id(md5(rand(0, 999999) . $_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT'] . microtime(false)));
     $GLOBALS['session_read_return'] = '';
   }
-  if (!isset($_SESSION)) session_start();
+  if (empty($_SESSION)) session_start();
   setcookie(session_name(), session_id(), time() + 86400*10, '/', COOKIE_DOMAIN, false, true);
 }
 

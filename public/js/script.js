@@ -23,7 +23,7 @@ function uploadMediaInsta() {
   $preloader.show();
 
   $.ajax({
-    url: "/api/media",
+    url: "/api/media/",
     data: {
       instagramMediaPageUrl: media_page_url
     },
@@ -57,16 +57,39 @@ function copyToClipboard(element) {
 }
 
 function saveMedia(type, url, el) {
-
   $.ajax({
-    url: "/ajax/saveinstamedia",
+    url: "/ajax/saveinstamedia/",
     data: {
       type: type,
       url: url
     },
-    success: function(obj) {
+    success: function(data) {
+      var obj = $.parseJSON(data);
       console.log(obj);
-      $(el).replaceWith('<span>Сохранено</span>');
+
+      if (obj.complete) {
+        $(el).replaceWith('<span>Сохранено</span>');
+      }
+    },
+    error: function (error) {
+      console.log(error);
+    }
+  });
+}
+
+function removeMedia(id) {
+  $.ajax({
+    url: "/ajax/removeinstamedia/",
+    data: {
+      id: id
+    },
+    success: function(data) {
+      console.log(data);
+      var obj = $.parseJSON(data);
+
+      if (obj.complete) {
+        $('#media-'+id).slideUp(function(){$(this).remove();});
+      }
     },
     error: function (error) {
       console.log(error);

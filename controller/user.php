@@ -27,36 +27,31 @@ class Controller_User extends Controller {
       return self::Index('Логин или пароль указаны неверно');
     } else {
       $profile = new Model_Profile($profile_id);
-      $back_url = !empty($_REQUEST['backurl']) ? $_REQUEST['backurl'] : '';
+      $back_url = !empty($_REQUEST['backurl']) ? $_REQUEST['backurl'] : '/';
 
-      self::callbackLogin($profile, $back_url);
+      // логируем факт логина
+      DB::insert('log_login', array(
+        'userid' => $profile->id,
+        'dt' => time(),
+        'ip' => $_SERVER['REMOTE_ADDR'],
+        'way' => 'login'
+      ));
+
+      setCurrentUser($profile);
+      // запомнить меня
+      setcookie('rm', Model_Rememberme::createUserHash($profile->id, 30), time() + 86400*30, '/', COOKIE_DOMAIN, false, true);
+      Redirect($back_url);
     }
   }
 
   public function Logout() {
+    $back_url = !empty($_REQUEST['backurl']) ? $_REQUEST['backurl'] : '/';
     unsetCurrentUser();
 
     setcookie(session_name(), "", time() - 3000*86400, "/", COOKIE_DOMAIN);
-    setcookie("cuid", "", time() - 3000*86400, "/", COOKIE_DOMAIN);
     if (!empty($_COOKIE['rm'])) Model_Rememberme::logOut($_COOKIE['rm']);
     setcookie("rm", "", time() - 3000*86400, "/", COOKIE_DOMAIN);
-    setcookie("cart", "", time() - 3000*86400, "/", COOKIE_DOMAIN);
 
-    Redirect('/');
-  }
-
-  private static function callbackLogin($profile, $back_url = '/') {
-    // логируем факт логина
-    DB::insert('log_login', array(
-      'userid' => $profile->id,
-      'dt' => time(),
-      'ip' => $_SERVER['REMOTE_ADDR'],
-      'way' => 'login'
-    ));
-
-    setCurrentUser($profile);
-    // запомнить меня
-    setcookie('rm', Model_Rememberme::createUserHash($profile->id, 30), time() + 86400*30, '/', COOKIE_DOMAIN, false, true);
     Redirect($back_url);
   }
 

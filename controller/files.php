@@ -1,7 +1,7 @@
 <?php
 
-class Controller_Saved extends Controller {
-  public function Index() {
+class Controller_Files extends Controller {
+  public function Saved() {
     $cu = getCurrentUser();
 
     if (empty($cu))
@@ -12,7 +12,7 @@ class Controller_Saved extends Controller {
 
     $view = new View();
     $view->add('medias', $medias);
-    $view->template = 'saved/index.tpl';
+    $view->template = 'files/saved.tpl';
 
     return $view->render();
   }
