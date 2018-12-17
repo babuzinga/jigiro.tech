@@ -118,14 +118,14 @@ class Controller_Api extends Controller {
 
       if (empty($object_data->edge_sidecar_to_children)) {
         $media[] = array(
-          'isVideo' => $object_data->is_video,
+          'isVideo' => !empty($object_data->is_video) ? 1 : 0,
           'url'     => (!empty($object_data->is_video)) ? $object_data->video_url : $object_data->display_url,
         );
       } else {
         $children = $object_data->edge_sidecar_to_children->edges;
         foreach ($children as $item) {
           $media[] = array(
-            'isVideo' => $item->node->is_video,
+            'isVideo' => !empty($item->node->is_video) ? 1 : 0,
             'url'     => (!empty($item->node->is_video)) ? $item->node->video_url : $item->node->display_url,
           );
         }

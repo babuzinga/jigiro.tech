@@ -9,7 +9,7 @@ $start = microtime(true);
 
 
 
-
+include BASE_DIR . '/config/server.local.php';
 // Подключение всех файлов php c контроллерами, моделями и библиотеками
 foreach(glob("lib/*.php") as $file) include $file;
 foreach(glob("controller/*.php") as $file) include $file;

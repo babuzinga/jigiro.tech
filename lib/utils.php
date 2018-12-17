@@ -55,3 +55,48 @@ function ajax($str) {
 function isSmartPhone() {
   return preg_match('/(?:tablet|ipad|ipod|mobile|mini|phone|symbian|android|ios|blackberry|webos)/', strtolower($_SERVER['HTTP_USER_AGENT']));
 }
+
+function getPath() {
+  date_default_timezone_set("Europe/Moscow");
+  return date('Y') . strtolower(date('M')) . '/' . date('d') . '/' . date('i') . '/';
+}
+
+function getFilename() {
+  DB::query('INSERT INTO filenames (foo) VALUES (1)');
+  $id = DB::getInsertId();
+  DB::query('DELETE FROM filenames WHERE id<' . $id);
+
+  return $id . '_' . rand(10000, 99999);
+}
+
+function checkDirs($fn) {
+  // поскольку файл создается по датам, то
+  // создаем нужные директории при необходимости
+  $oldumask = umask(0);
+  $dirs = explode('/', $fn);
+
+  $path = '';
+  foreach ($dirs as $dir) {
+    $path .= '/' . $dir;
+    if (!file_exists(BASE_DIR . '/data/originals' . $path)) {
+      mkdir(BASE_DIR . '/data/originals' . $path, 0775);
+    }
+    if (!file_exists(BASE_DIR . '/data/cache' . $path)) {
+      mkdir(BASE_DIR . '/data/cache' . $path, 0775);
+    }
+  }
+
+  umask($oldumask);
+}
+
+function instr($str, $substr) {
+  return is_int(strpos($str, $substr));
+}
+
+
+
+
+
+function getCurrentUser() {
+  return new Model_Profile(1); //$GLOBALS['runtime_current_user'];
+}

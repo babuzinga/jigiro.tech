@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS `filenames`;
+CREATE TABLE `filenames` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`foo` INT(11) NULL DEFAULT NULL,
+	PRIMARY KEY (`id`)
+)
+COLLATE='utf8_general_ci'
+ENGINE=MyISAM
+;

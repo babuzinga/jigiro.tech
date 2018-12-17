@@ -11,18 +11,17 @@
         получить нужные фотографии или видео. Скачивание бесплатно и не требует регистарции.
       </p>
       <br/>
-      <div id="double-click" ondblclick=""></div>
       <input
         type="text"
         placeholder="Ссылка на пост в Instagram"
         id="instagram_media_page_url"
-        class="form-control"
-        value=""
-        size="50"
+        class="form-text"
+        value="https://www.instagram.com/p/BrPqfEYFvLi/"
         onclick="this.select();"
         >
       <button
         type="button"
+        class="button"
         id="submit_button"
         onclick="uploadMediaInsta()"
         >Загрузить</button>
@@ -39,24 +38,23 @@
     <div id="success" style="display:none;">
       <div id="media-container"></div>
     </div>
-
-    <br/>
-    <br/>
-    <br/>
-    <div class="ins-share">
-      <span>Рассказать друзьям, как копировать фото, видео и текст из Instagram</span>
-      {include
-        inline file="blocks/ya-share.tpl"
-        id_share="ins-share"
-        smartphone=$smartphone
-        title="На сайте Jigiro.tech вы можете скопировать текст, скачать фото и видео из Instagram онлайн."
-        description=""
-        image=""
-      }
-    </div>
   </div>
 
   {include file="handlebars/media-template.tpl"}
+</section>
+
+<section>
+  <div class="share-block">
+    <span>Рассказать друзьям, как копировать фото, видео и текст из Instagram</span>
+    {include
+      inline file="blocks/ya-share.tpl"
+      id_share="ins-share"
+      smartphone=$smartphone
+      title="На сайте Jigiro.tech вы можете скопировать текст, скачать фото и видео из Instagram онлайн."
+      description=""
+      image=""
+    }
+  </div>
 </section>
 
 {include file="layout/footer.tpl"}

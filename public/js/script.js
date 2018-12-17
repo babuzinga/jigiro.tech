@@ -56,6 +56,20 @@ function copyToClipboard(element) {
   $temp.remove();
 }
 
-function saveMedia(type, url) {
+function saveMedia(type, url, el) {
 
+  $.ajax({
+    url: "/ajax/saveinstamedia",
+    data: {
+      type: type,
+      url: url
+    },
+    success: function(obj) {
+      console.log(obj);
+      $(el).replaceWith('<span>Сохранено</span>');
+    },
+    error: function (error) {
+      console.log(error);
+    }
+  });
 }

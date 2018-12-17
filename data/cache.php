@@ -1,6 +1,6 @@
 <?php
 /*
- *  http://www.project.local/data/cache/2017mar/25/04/39888_94775-300x220x.jpg
+ *  http://www.jigiro.local/data/cache/2018dec/17/08/bf6995e51c81bcca7e7e1644119f4f08-300x220x.jpg
  */
 
 
@@ -299,7 +299,7 @@ if ($mod_cover) {
 }
 
 $info = getimagesize($cache_filename);
-$add_watermark = ($info[0] >= 300 && $frames_count == 1 && !file_exists($nomark_filename));
+$add_watermark = false; //($info[0] >= 300 && $frames_count == 1 && !file_exists($nomark_filename));
 if ($add_watermark) {
   $watermarkfile = '/public/img/watermark/w300.png';
   if ($info[0] > 500) $watermarkfile = '/public/img/watermark/w400.png';

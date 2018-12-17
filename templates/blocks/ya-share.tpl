@@ -16,4 +16,4 @@
             image: '{$image|default}'
         }
     });
-</script>-
+</script>
