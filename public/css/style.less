@@ -59,6 +59,7 @@ h1 { font-size: 40px; }
 h2 { font-size: 30px; }
 p { margin: 0; }
 a, .link { color: @color_basiclink;  text-decoration: underline; cursor: pointer; }
+a.in-progress, .link.in-progress { color: @color_basic; text-decoration: none; cursor: default; }
 a:hover, .link:hover { text-decoration: none; }
 .error { color: @error_color; }
 
@@ -193,9 +194,17 @@ section {
     border-bottom-color: #B9B9B9;
   }
 
-  .s-name {font-size: 20px; display: inline-block;}
+  .s-name {
+    font-size: 20px;
+    display: inline-block;
+
+    background: @background_section;
+    padding: 5px 10px;
+    margin: 0 0 8px 0;
+    border-bottom: 1px solid;
+  }
   .s-hidden {color: @border_basic;}
-  .error {display: block; color: red; margin: 20px 0;}
+  .error {display: block; color: red; margin: 5px 0;}
   .hidden {display: none;}
 
   #media-container > div {

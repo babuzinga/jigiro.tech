@@ -12,7 +12,7 @@ class Model_Media extends Model {
       'dt_u',
       'dt',
       'user_id',
-      'isVideo',
+      'video',
       'hash_sum',
       'title',
       'link',
@@ -21,7 +21,18 @@ class Model_Media extends Model {
     if (!empty($id)) $this->getData($id);
   }
 
-  function getUrl() {
-    return PROTOCOL . HOST_NAME . '/data/cache/' . $this->link;
+  function getVideo() {
+    return PROTOCOL . HOST_NAME . '/data/originals/' . $this->link;
+  }
+
+  public function getImage($type = '') {
+    if ($this->link) {
+      $size   = ($type ? '-' . $GLOBALS['THUMB_SIZES'][$type] : '') . '.jpg';
+      $image  = PROTOCOL . HOST_NAME . '/data/cache/' . $this->link;
+      return  str_replace('.jpg', $size, $image);
+    } else {
+      $str = PROTOCOL . HOST_NAME . '/public/image/noimagelarge.png';
+      return $str;
+    }
   }
 }

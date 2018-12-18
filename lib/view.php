@@ -37,6 +37,15 @@ class View {
 
 
 
+  public static function error($title = '', $reason = '') {
+    $view = new View();
+    $view->add('title', $title);
+    $view->add('reason', $reason);
+    $view->template = 'templates/errors/error.tpl';
+
+    return $view->render();
+  }
+
   public static function error401($reason = false, $standart = 'У вас нет прав на просмотр этой страницы.') {
     header("HTTP/1.1 401 Unauthorized");
     header('WWW-Authenticate: Basic realm="Login"');

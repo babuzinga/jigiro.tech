@@ -16,9 +16,10 @@
         placeholder="Ссылка на пост в Instagram"
         id="instagram_media_page_url"
         class="form-text"
-        value="https://www.instagram.com/p/BrPqfEYFvLi/"
+        value="https://www.instagram.com/p/Brgdg_8HDMf/"
         onclick="this.select();"
         >
+      <div id="error" class="error hidden"></div>
       <button
         type="button"
         class="button"
@@ -32,9 +33,6 @@
       <div class="double-bounce2"></div>
     </div>
 
-    <div id="error" class="error hidden">
-
-    </div>
     <div id="success" style="display:none;">
       <div id="media-container"></div>
     </div>

@@ -57,6 +57,9 @@ function copyToClipboard(element) {
 }
 
 function saveMedia(type, url, el) {
+  var $el = $(el);
+  $el.removeAttr('onclick').addClass('in-progress').html('Идет сохранение...');
+
   $.ajax({
     url: "/ajax/saveinstamedia/",
     data: {
@@ -68,7 +71,9 @@ function saveMedia(type, url, el) {
       console.log(obj);
 
       if (obj.complete) {
-        $(el).replaceWith('<span>Сохранено</span>');
+        $el.replaceWith('<span>Сохранено</span>');
+      } else {
+        $el.replaceWith('<span>Ошибка, попробуйте скачать медиа файл</span>');
       }
     },
     error: function (error) {

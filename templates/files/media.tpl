@@ -2,7 +2,11 @@
   <div>
     <span class="s-name">{$media->title}</span>
     <br/>
-    <span class="link">Скачать</span>
+    <a
+      href="/files/download/?url={$media->link}&video={$media->video}&local=1"
+      rel="nofollow"
+      target="_blank"
+      >Скачать</a>
     &mdash;
     <span class="s-hidden">Переименовать</span>
     &mdash;
@@ -11,10 +15,10 @@
     <span class="link" onclick="removeMedia({{$media->id}})">Удалить</span>
   </div>
   <div>
-    {if !empty($media->isVideo)}
-      <video controls src="{$media->getUrl()}"></video>
+    {if $media->video eq 1}
+      <video controls src="{$media->getVideo()}"></video>
     {else}
-      <img src="{$media->getUrl()}"/>
+      <img src="{$media->getImage()}"/>
     {/if}
   </div>
 </div>

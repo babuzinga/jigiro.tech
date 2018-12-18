@@ -3,7 +3,7 @@
 class Controller_Ajax extends Controller {
   /**
    * TODO:: ДОРАБОТКИ
-   * - получить хэш-сумма файла
+   * - получить хэш-сумму файла
    */
   public function SaveInstaMedia() {
     $cu = getCurrentUser();
@@ -26,15 +26,15 @@ class Controller_Ajax extends Controller {
       'dt_u'      => time(),
       'dt'        => date("Y-m-d H:i:s", time()),
       'user_id'   => $cu->id,
-      'isVideo'   => $type,
-      'hash_sum'  => $url,
+      'video'     => $type,
       'title'     => $filename,
       'link'      => $path . $filename,
     );
 
     checkDirs($path);
 
-    if (DownloadPicture::Save($url, $path . $filename)) {
+    if ($md5_file = DownloadPicture::Save($url, $path . $filename)) {
+      $data['hash_sum'] = $md5_file;
       DB::insert('medias', $data);
       ajax(array2json(array('complete' => 1)));
     } else {
