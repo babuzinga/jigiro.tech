@@ -5,7 +5,7 @@ class DownloadPicture {
 
     // загружаем картинку с указанного УРЛ
     $temp_path = BASE_DIR . '/tmp/' . md5($url . microtime());
-
+    //
     $md5_file = self::getFile($url, $temp_path);
 
     /*
@@ -18,7 +18,6 @@ class DownloadPicture {
     }
     */
 
-    //UploadPicture::CheckDirs($fn);
     if (file_exists($target)) unlink($target); // удаляем предыдущую версию, если она есть
 
     copy($temp_path, $target);

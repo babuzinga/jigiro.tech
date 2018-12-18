@@ -3,7 +3,7 @@
 class Controller_Ajax extends Controller {
   /**
    * TODO:: ДОРАБОТКИ
-   * - получить хэш-сумму файла
+   *
    */
   public function SaveInstaMedia() {
     $cu = getCurrentUser();
@@ -42,23 +42,34 @@ class Controller_Ajax extends Controller {
     }
   }
 
+
+
   /**
    * TODO:: ДОРАБОТКИ
-   * - удалить все версии файла
+   *
    */
+
+  // http://www.jt1.local/ajax/RemoveInstaMedia?id=2
   public function RemoveInstaMedia() {
     $cu = getCurrentUser();
     if (empty($cu))
       ajax(array2json(array('error' => 1)));
 
     $media_id = !empty($_GET['id']) ? Request::getStr('id') : false;
-    $check    = DB::singleRow('SELECT id FROM medias WHERE user_id = ?i AND id = ?i', $cu->id, $media_id);
+    $check    = DB::singleRow('SELECT * FROM medias WHERE user_id = ?i AND id = ?i', $cu->id, $media_id);
+
     if (empty($check)) {
       ajax(array2json(array('error' => 'Недостаточно прав на удаление')));
     }
 
     try {
-      unlink(BASE_DIR . '/data/originals/' .$check['link']);
+      $original = BASE_DIR . '/data/originals/' . $check['link'];
+      if (file_exists($original)) unlink($original);
+      if (empty($check['video'])) {
+        $cache = BASE_DIR . '/data/cache/' . str_replace('.jpg', '', $check['link']);
+        array_map("unlink", glob($cache . '*'));
+      }
+
       DB::delete('medias', 'id=' . $check['id']);
       ajax(array2json(array('complete' => 'ok')));
     } catch (Exception $e) {

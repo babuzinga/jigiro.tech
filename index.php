@@ -17,7 +17,8 @@ foreach(glob("model/*.php") as $file) include $file;
 
 include 'lib/smarty3/Smarty.class.php';
 
-DB::connect(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
+Service_Startup::connectDatabase();
+Service_Startup::sendHeaders();
 
 Controller_User::rememberMe();
 
