@@ -14,6 +14,7 @@ class Model_Media extends Model {
       'user_id',
       'video',
       'hash_sum',
+      'filesize',
       'title',
       'link',
     );
@@ -21,8 +22,12 @@ class Model_Media extends Model {
     if (!empty($id)) $this->getData($id);
   }
 
-  function getVideo() {
+  public function getOriginalUrl() {
     return PROTOCOL . HOST_NAME . '/data/originals/' . $this->link;
+  }
+
+  public function getVideo() {
+    return $this->getOriginalUrl();
   }
 
   public function getImage($type = '') {
@@ -33,6 +38,31 @@ class Model_Media extends Model {
     } else {
       $str = PROTOCOL . HOST_NAME . '/public/image/noimagelarge.png';
       return $str;
+    }
+  }
+
+  public function getFilesize() {
+    $file_size = $this->filesize;
+
+    if($file_size > 1024){
+      $file_size = ($file_size/1024);
+      if($file_size > 1024){
+        $file_size = ($file_size/1024);
+        if($file_size > 1024) {
+          $file_size = ($file_size/1024);
+          $file_size = round($file_size, 1);
+          return $file_size . " Gb";
+        } else {
+          $file_size = round($file_size, 1);
+          return $file_size." Mb";
+        }
+      } else {
+        $file_size = round($file_size, 1);
+        return $file_size." Kb";
+      }
+    } else {
+      $file_size = round($file_size, 1);
+      return $file_size." byte";
     }
   }
 }

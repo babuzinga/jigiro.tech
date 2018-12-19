@@ -3,7 +3,7 @@
     {{!--
     <div>
       <div>
-        <span id="insta-owner" class="s-name">@{{owner_login}}</span>
+        <span id="insta-owner">@{{owner_login}}</span>
       </div>
       <div>
         <span onclick="copyToClipboard('#insta-owner')" class="link">Копировать автора</span>
@@ -27,16 +27,20 @@
     {{#each medias}}
     <div>
       <div>
-        <a
-          href="/files/download/?url={{this.url}}&video={{this.isVideo}}"
-          rel="nofollow"
-          target="_blank"
-          >Скачать</a>
-
-        {/literal}{if !empty($current_user)}{literal}
-          &mdash;
-          <span onclick="saveMedia('{{this.isVideo}}', '{{this.url}}', this)" class="link">Сохранить</span>
-        {/literal}{/if}{literal}
+        <ul class="media-control">
+          <li>
+            <a
+              href="/files/download/?url={{this.url}}&video={{this.isVideo}}"
+              rel="nofollow"
+              target="_blank"
+              >Скачать</a>
+          </li>
+          {/literal}{if !empty($current_user)}{literal}
+            <li>
+              <span onclick="saveMedia('{{this.isVideo}}', '{{this.url}}', this)" class="link">Сохранить</span>
+            </li>
+          {/literal}{/if}{literal}
+        </ul>
       </div>
 
       <div>

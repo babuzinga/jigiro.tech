@@ -6,6 +6,7 @@ CREATE TABLE `medias` (
   `user_id` INT(11) NOT NULL DEFAULT '0',
   `video` INT(1) NOT NULL DEFAULT '0',
   `hash_sum` VARCHAR(200) NULL DEFAULT '' COMMENT 'хэш сумма файла',
+  `filesize` VARCHAR(200) NULL DEFAULT '' COMMENT 'размер файла в байтах',
   `title` VARCHAR(200) NULL DEFAULT '' COMMENT 'имя файла',
   `link` VARCHAR(200) NULL DEFAULT '' COMMENT 'полный путь до файла',
   PRIMARY KEY (`id`)

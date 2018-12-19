@@ -206,7 +206,15 @@ section {
   .s-hidden {color: @border_basic;}
   .error {display: block; color: red; margin: 5px 0;}
   .hidden {display: none;}
-
+  .media-control {
+    li {
+      display: inline-block;
+      margin-right: 20px;
+    }
+    li:last-of-type {
+      margin-right: 0;
+    }
+  }
   #media-container > div {
     margin: 10px 0;
     border-bottom: 1px solid @border_basic;

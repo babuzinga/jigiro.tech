@@ -16,7 +16,7 @@
         placeholder="Ссылка на пост в Instagram"
         id="instagram_media_page_url"
         class="form-text"
-        value="https://www.instagram.com/p/Brgdg_8HDMf/"
+        value=""
         onclick="this.select();"
         >
       <div id="error" class="error hidden"></div>

@@ -20,32 +20,35 @@ function uploadMediaInsta() {
   }
 
   $submit_button.hide();
-  $preloader.show();
+  $preloader.fadeIn(function(){
+    $.ajax({
+      url: "/api/media/",
+      data: {
+        instagramMediaPageUrl: media_page_url
+      },
+      success: function(obj) {
+        // var obj = $.parseJSON(data);
+        var html = template(obj.info);
 
-  $.ajax({
-    url: "/api/media/",
-    data: {
-      instagramMediaPageUrl: media_page_url
-    },
-    success: function(obj) {
-      // var obj = $.parseJSON(data);
-      var html = template(obj.info);
+        $('#error').hide();
+        $('#media-container').html(html);
 
-      $('#error').hide();
-      $('#media-container').html(html);
-      $('#success').show();
-    },
-    error: function (error) {
-      console.log(error.responseJSON);
-      var error = error.responseJSON.description;
+        $preloader.hide();
+        $submit_button.show();
+        $('#success').show();
+      },
+      error: function (error) {
+        console.log(error.responseJSON);
+        var error = error.responseJSON.description;
 
-      $('#error').show().html(error);
-      $('#success').hide();
-    }
+        $('#error').show().html(error);
+
+        $preloader.hide();
+        $submit_button.show();
+        $('#success').hide();
+      }
+    });
   });
-
-  $submit_button.show();
-  $preloader.hide();
 }
 
 function copyToClipboard(element) {
@@ -82,7 +85,7 @@ function saveMedia(type, url, el) {
   });
 }
 
-function removeMedia(id) {
+function removeMedia(id, el) {
   $.ajax({
     url: "/ajax/removeinstamedia/",
     data: {

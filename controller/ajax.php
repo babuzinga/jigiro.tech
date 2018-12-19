@@ -33,8 +33,10 @@ class Controller_Ajax extends Controller {
 
     checkDirs($path);
 
-    if ($md5_file = DownloadPicture::Save($url, $path . $filename)) {
+    if (list($filesize, $md5_file) = DownloadPicture::Save($url, $path . $filename)) {
       $data['hash_sum'] = $md5_file;
+      $data['filesize'] = $filesize;
+
       DB::insert('medias', $data);
       ajax(array2json(array('complete' => 1)));
     } else {

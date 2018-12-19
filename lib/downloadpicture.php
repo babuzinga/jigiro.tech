@@ -6,7 +6,7 @@ class DownloadPicture {
     // загружаем картинку с указанного УРЛ
     $temp_path = BASE_DIR . '/tmp/' . md5($url . microtime());
     //
-    $md5_file = self::getFile($url, $temp_path);
+    $result = self::getFile($url, $temp_path);
 
     /*
     // проверим картинка ли?
@@ -23,7 +23,7 @@ class DownloadPicture {
     copy($temp_path, $target);
     unlink($temp_path);
 
-    return $md5_file;
+    return $result;
   }
 
   static function ReturnFile($url, $video, $local = false) {
@@ -64,7 +64,7 @@ class DownloadPicture {
   /**
    * @param $url
    * @param $temp_path
-   * @return string
+   * @return array
    */
   private function getFile($url, $temp_path) {
     $ch = curl_init($url);
@@ -80,6 +80,9 @@ class DownloadPicture {
     fwrite($fp, $str);
     fclose($fp);
 
-    return hash_file('md5', $temp_path);
+    return array(
+      filesize ($temp_path),
+      hash_file('md5', $temp_path),
+    );
   }
 }
