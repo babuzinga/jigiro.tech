@@ -43,12 +43,12 @@
 
 <section>
   <div class="share-block">
-    <span>Рассказать друзьям, как копировать фото, видео и текст из Instagram</span>
+    <span>Рассказать друзьям, как скачать фото и видео из Instagram</span>
     {include
       inline file="blocks/ya-share.tpl"
       id_share="ins-share"
       smartphone=$smartphone
-      title="На сайте Jigiro.tech вы можете скопировать текст, скачать фото и видео из Instagram онлайн."
+      title="На сайте Jigiro.tech вы можете скачать фото и видео из Instagram онлайн."
       description=""
       image=""
     }
