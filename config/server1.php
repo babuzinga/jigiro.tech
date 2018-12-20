@@ -1,17 +1,17 @@
 <?php
 
-define('DEV_MODE',          true);
+define('DEV_MODE',          false);
 define('PROTOCOL',          'http://');
-define('HOST_NAME',         'www.jt1.local');
+define('HOST_NAME',         'jigiro.tech');
 define('HOST_TYPE',         'local');
 define('PROJECT_NAME',      'JIGIRO');
 define('PROJECT_NAME_FULL', 'JIGIRO.TECH [ sercices project 2018 ]');
 define('SALT',              '!9vf80-');
-define('COOKIE_DOMAIN',     '.jt1.local');
+define('COOKIE_DOMAIN',     '.jigiro.tech');
 
-define('DB_DATABASE',       'jigiro');
-define('DB_USER',           'root');
-define('DB_PASSWORD',       '');
+define('DB_DATABASE',       'cm27499_jigiro');
+define('DB_USER',           'cm27499_jigiro');
+define('DB_PASSWORD',       'WgV6HbpL');
 define('DB_HOST',           'localhost');
 
 

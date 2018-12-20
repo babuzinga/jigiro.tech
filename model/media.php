@@ -15,6 +15,8 @@ class Model_Media extends Model {
       'video',
       'hash_sum',
       'filesize',
+      'i_width',
+      'i_height',
       'title',
       'link',
     );
@@ -26,18 +28,18 @@ class Model_Media extends Model {
     return PROTOCOL . HOST_NAME . '/data/originals/' . $this->link;
   }
 
-  public function getVideo() {
-    return $this->getOriginalUrl();
-  }
-
-  public function getImage($type = '') {
-    if ($this->link) {
-      $size   = ($type ? '-' . $GLOBALS['THUMB_SIZES'][$type] : '') . '.jpg';
-      $image  = PROTOCOL . HOST_NAME . '/data/cache/' . $this->link;
-      return  str_replace('.jpg', $size, $image);
+  public function getUrl($type = '') {
+    if ($this->isVideo()) {
+      return $this->getOriginalUrl();
     } else {
-      $str = PROTOCOL . HOST_NAME . '/public/image/noimagelarge.png';
-      return $str;
+      if ($this->link) {
+        $size   = ($type ? '-' . $GLOBALS['THUMB_SIZES'][$type] : '') . '.jpg';
+        $image  = PROTOCOL . HOST_NAME . '/data/cache/' . $this->link;
+        return  str_replace('.jpg', $size, $image);
+      } else {
+        $str = PROTOCOL . HOST_NAME . '/public/image/noimagelarge.png';
+        return $str;
+      }
     }
   }
 
@@ -64,5 +66,13 @@ class Model_Media extends Model {
       $file_size = round($file_size, 1);
       return $file_size." byte";
     }
+  }
+
+  public function isVideo() {
+    return $this->video;
+  }
+
+  public function getImageResolution($sep = '') {
+    return (!$this->isVideo()) ? ($sep . $this->i_width . 'x' . $this->i_height) : '';
   }
 }

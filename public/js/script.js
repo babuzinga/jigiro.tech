@@ -12,13 +12,15 @@ function uploadMediaInsta() {
       template = Handlebars.compile(source),
       media_page_url = $('#instagram_media_page_url').val(),
       $submit_button = $('#submit_button'),
-      $preloader = $('#preloader');
+      $preloader = $('#preloader'),
+      $success = $('#success');
 
   if (!media_page_url) {
     $('#error').show().html('Укажите ссылку на пост в Instagram');
     return false;
   }
 
+  $success.hide();
   $submit_button.hide();
   $preloader.fadeIn(function(){
     $.ajax({
@@ -35,7 +37,7 @@ function uploadMediaInsta() {
 
         $preloader.hide();
         $submit_button.show();
-        $('#success').show();
+        $success.show();
       },
       error: function (error) {
         console.log(error.responseJSON);
@@ -45,7 +47,7 @@ function uploadMediaInsta() {
 
         $preloader.hide();
         $submit_button.show();
-        $('#success').hide();
+        $success.hide();
       }
     });
   });

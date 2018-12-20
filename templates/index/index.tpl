@@ -2,7 +2,7 @@
 
 <section>
   <div class="content">
-    <h1>Скачать изображения и видео из <span>Instagram</span></h1>
+    <h1>JIGIRO <span>SERVICE</span></h1>
     <br/>
     <form onsubmit="uploadMediaInsta(); return false;">
       <p>

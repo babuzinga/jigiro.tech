@@ -116,12 +116,15 @@ class Controller_Api extends Controller {
       if (empty($object_data)) $this->errorResponse(self::E_PAGE_NOTE_FOUND, array(), 404);
       $media = array();
 
+      // Если в посте, отсутствует множество дочерних объектов,
+      // т.е. в посте всего одно изображение или видео - получаем данные только по нему
       if (empty($object_data->edge_sidecar_to_children)) {
         $media[] = array(
           'isVideo' => !empty($object_data->is_video) ? 1 : 0,
           'url'     => (!empty($object_data->is_video)) ? $object_data->video_url : $object_data->display_url,
         );
       } else {
+        // ... если дочерних объектов множество, прогоняем их все, для получения данных
         $children = $object_data->edge_sidecar_to_children->edges;
         foreach ($children as $item) {
           $media[] = array(
