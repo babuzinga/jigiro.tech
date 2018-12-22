@@ -40,18 +40,12 @@
 
       <div
         class="menu-wrapper"
-        onclick="$('.hamburger-menu').toggleClass('animate');"
+        onclick="$('.hamburger-menu').toggleClass('animate');$('.mobile').toggleClass('hidden');"
         >
         <span class="hamburger-menu"></span>
       </div>
 
-      <ul class="mobile">
-        <li class="icon i-menu" onclick="$('.mobile').toggleClass('sub-menu')"></li>
-        <li>
-          <ul class="sub">
-            <li class="icon i-close" onclick="$('.mobile').toggleClass('sub-menu')"></li>
-            {include file="blocks/menu-items.tpl"}
-          </ul>
-        </li>
+      <ul class="mobile hidden">
+        {include file="blocks/menu-items.tpl"}
       </ul>
     </header>
