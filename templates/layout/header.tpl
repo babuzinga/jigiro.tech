@@ -38,6 +38,13 @@
         {include file="blocks/menu-items.tpl"}
       </ul>
 
+      <div
+        class="menu-wrapper"
+        onclick="$('.hamburger-menu').toggleClass('animate');"
+        >
+        <span class="hamburger-menu"></span>
+      </div>
+
       <ul class="mobile">
         <li class="icon i-menu" onclick="$('.mobile').toggleClass('sub-menu')"></li>
         <li>
