@@ -3,7 +3,7 @@
 <section>
   <div class="content">
     {if !empty($medias)}
-      <h1>Сохраненное <span>{$current_user->login}</span></h1>
+      <h1>Сохраненное: <span>{$current_user->login}</span></h1>
       <br/>
       <div id="media-container">
         {foreach $medias as $media}
