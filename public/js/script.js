@@ -57,6 +57,12 @@ function pasteClipboard(id) {
 
 }
 
+function loadImage(element) {
+  var $img = $(element),
+      url = $img.data('img');
+  $img.attr('src', url);
+}
+
 function copyToClipboard(element) {
   var $temp = $("<textarea>");
   $("body").append($temp);
