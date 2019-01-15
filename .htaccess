@@ -34,5 +34,7 @@ AddDefaultCharset UTF-8
 
 RewriteEngine On
 RewriteBase /
+
 RewriteCond %{REQUEST_URI} !^/public
+RewriteCond %{THE_REQUEST} !/google3ebfeda455f76208.html [NC]
 RewriteRule . index.php [L]
