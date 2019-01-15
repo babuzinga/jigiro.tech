@@ -1,8 +1,9 @@
 {include file="layout/header.tpl"}
 
 <section>
-  <div class="content">
-    <h1><span>JIGIRO</span> SERVICE</h1>
+  <div class="content center-all">
+    {*<h1><span>JIGIRO</span> SERVICE</h1>*}
+    <img src="{$host_name}/public/image/jigiro-logo.png" alt="jigiro">
     <br/>
     <form onsubmit="uploadMediaInsta(); return false;">
       <p>
