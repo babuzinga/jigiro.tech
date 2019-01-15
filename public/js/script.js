@@ -53,6 +53,10 @@ function uploadMediaInsta() {
   });
 }
 
+function pasteClipboard(id) {
+
+}
+
 function copyToClipboard(element) {
   var $temp = $("<textarea>");
   $("body").append($temp);

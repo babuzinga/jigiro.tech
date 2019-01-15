@@ -2,7 +2,8 @@
   <div>
     <span class="s-name">
       {$media->title}
-      ({$media->getFilesize()}{$media->getImageResolution(' - ')})
+      <br/>
+      {$media->getFilesize()}{$media->getImageResolution(' - ')}
     </span>
     <ul class="media-control">
       <li>
@@ -26,7 +27,7 @@
       <video controls src="{$media->getUrl()}"></video>
     {else}
       <a href="{$media->getOriginalUrl()}" target="_blank">
-        <img src="{$media->getUrl()}"/>
+        <img src="{$media->getUrl('preview')}"/>
       </a>
     {/if}
   </div>

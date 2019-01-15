@@ -7,6 +7,8 @@ CREATE TABLE `medias` (
   `video` INT(1) NOT NULL DEFAULT '0',
   `hash_sum` VARCHAR(200) NULL DEFAULT '' COMMENT 'хэш сумма файла',
   `filesize` VARCHAR(200) NULL DEFAULT '' COMMENT 'размер файла в байтах',
+  `i_width` VARCHAR(5) NULL DEFAULT '' COMMENT 'ширина изображения',
+  `i_height` VARCHAR(5) NULL DEFAULT '' COMMENT 'высота изображения',
   `title` VARCHAR(200) NULL DEFAULT '' COMMENT 'имя файла',
   `link` VARCHAR(200) NULL DEFAULT '' COMMENT 'полный путь до файла',
   PRIMARY KEY (`id`)

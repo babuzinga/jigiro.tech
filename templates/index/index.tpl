@@ -11,6 +11,9 @@
         получить нужные фотографии или видео. Скачивание бесплатно и не требует регистарции.
       </p>
       <br/>
+
+      {*<div id="paste_clipboard" onclick="pasteClipboard('instagram_media_page_url')">Вставить из буфера</div>*}
+
       <input
         type="text"
         placeholder="Ссылка на пост в Instagram"

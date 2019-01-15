@@ -4,8 +4,7 @@
   <div class="content">
     {if !empty($medias)}
       <h1>Сохраненное: <span>{$current_user->login}</span></h1>
-      <br/>
-      <div id="media-container">
+      <div id="media-container" class="collection">
         {foreach $medias as $media}
           {include file="files/media.tpl"}
         {/foreach}
