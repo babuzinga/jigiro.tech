@@ -28,6 +28,8 @@
   <script src="/public/js/less.min.js" type="text/javascript"></script>
   {* https://handlebarsjs.com/expressions.html *}
   <script src="/public/js/handlebars-v4.0.12.js" type="text/javascript"></script>
+
+  <meta name="yandex-verification" content="358de140111a4632" />
 </head>
 
 {* https://html5book.ru/html-tags/ *}
