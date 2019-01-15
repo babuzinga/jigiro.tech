@@ -5,18 +5,17 @@
     про less - http://habrahabr.ru/post/136525/
 */
 
-@background_basic: #ffffff;
-@background_section: #f5f5f5;
+@background_basic: #f4f4f4;
+@background_section: white;
 @border_basic: #e2e2e2;
 
 @color_basic: #1f1e23;
-@color_basiclink: #25b3cb;
-@error_color: red;
+@color_basiclink: #1f1e23;
+@error_color: #fa311f;
 
-@color_design: #25b3cb;
-@color_design_light: #2ed1ec;
-@color_design_dark: #2099ae;
-@color_design_font: #1f1e23;
+@color_design: #fa311f;
+@color_design_light: #ff5a4b;
+@color_design_dark: #db1a08;
 
 @max_width: 600px;
 @border_radius: 0;
@@ -50,9 +49,9 @@ h1, h2 {
   margin: 0;
   text-transform: uppercase;
   font-family: RobotoCondensedBold;
-  color: @color_design;
+  color: @color_basic;
 
-  span { color: @color_design_font; }
+  span { color: @color_design; }
 }
 
 h1 { font-size: 40px; }
@@ -135,7 +134,7 @@ section {
   div.share-block {
     width: 100%;
     padding: 10px 10px 15px 10px;
-    background: #f2f2f2;
+    background: @background_section;
     margin: 10px 0 45px 0;
     border-radius: 7px;
     text-align: center;
@@ -233,7 +232,7 @@ section {
 
 footer {
   height: 45px;
-  background-color: @border_basic;
+  background-color: @background_section;
   color: @color_basic;
   padding: 10px 0;
   box-sizing: border-box;
@@ -255,7 +254,7 @@ footer {
   top: 8px;
   left: 0;
   padding: 5px 15px;
-  color: @color_design_font;
+  color: @color_basic;
   font-size: 12px;
 }
 /* end:ids */

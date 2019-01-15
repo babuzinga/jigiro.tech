@@ -11,7 +11,7 @@
         {/foreach}
       </div>
     {else}
-      <h1>Данных нет</h1>
+      <h1>Альбом пуст</h1>
     {/if}
   </div>
 </section>

@@ -2,7 +2,7 @@
 
 <section>
   <div class="content">
-    <h1>JIGIRO <span>SERVICE</span></h1>
+    <h1><span>JIGIRO</span> SERVICE</h1>
     <br/>
     <form onsubmit="uploadMediaInsta(); return false;">
       <p>

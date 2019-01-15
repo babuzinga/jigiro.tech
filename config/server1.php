@@ -3,7 +3,7 @@
 define('DEV_MODE',          false);
 define('PROTOCOL',          'http://');
 define('HOST_NAME',         'jigiro.tech');
-define('HOST_TYPE',         'local');
+define('HOST_TYPE',         'production');
 define('PROJECT_NAME',      'JIGIRO');
 define('PROJECT_NAME_FULL', 'JIGIRO.TECH [ sercices project 2018 ]');
 define('SALT',              '!9vf80-');

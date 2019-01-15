@@ -11,3 +11,5 @@ COMMENT='пользователи'
 COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 ;
+
+INSERT INTO `profiles` (`id`, `dt_u`, `dt`, `login`, `password`) VALUES (1, 1545006459, '2018-12-17 10:27:56', 'jigiro', 'c4cdaded90fb6649d333b7d71de28fa5 ');

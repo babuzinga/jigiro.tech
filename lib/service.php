@@ -5,6 +5,16 @@ class Service_Startup {
     DB::connect(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
   }
 
+  public static function setResolution() {
+    $rows = DB::getRows('SELECT * FROM medias WHERE video = 0 AND i_width = 0');
+    if (!empty($rows)) :
+      foreach ($rows as $item) {
+        list($width, $height, $type, $attr) = getimagesize(BASE_DIR . '/data/originals/' . $item['link']);
+        DB::update('medias', $item['id'], array('i_width' => $width, 'i_height' => $height));
+      }
+    endif;
+  }
+
   public static function sendHeaders() {
     /*
     // запретим кэширование в браузере - Опера глючит из-за него?
