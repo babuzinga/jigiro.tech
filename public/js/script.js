@@ -99,21 +99,34 @@ function saveMedia(type, url, el) {
 }
 
 function removeMedia(id, el) {
-  $.ajax({
-    url: "/ajax/removeinstamedia/",
-    data: {
-      id: id
-    },
-    success: function(data) {
-      console.log(data);
-      var obj = $.parseJSON(data);
+  $.confirm({
+    title: 'Подтверждение!',
+    content: 'Вы уверены что хотите удалить медиа файл?',
+    buttons: {
+      Удалить: function () {
+        $.ajax({
+          url: "/ajax/removeinstamedia/",
+          data: {
+            id: id
+          },
+          success: function(data) {
+            console.log(data);
+            var obj = $.parseJSON(data);
 
-      if (obj.complete) {
-        $('#media-'+id).slideUp(function(){$(this).remove();});
+            if (obj.complete) {
+              $('#media-' + id).slideUp(function() {
+                $(this).remove();
+              });
+            }
+          },
+          error: function(error) {
+            console.log(error);
+          }
+        });
+      },
+      Отмена: function () {
+
       }
-    },
-    error: function (error) {
-      console.log(error);
     }
   });
 }

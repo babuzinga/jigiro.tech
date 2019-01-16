@@ -9,6 +9,7 @@
 
   <link rel="stylesheet" type="text/css" href="/public/css/reset.css" media="all">
   <link rel="stylesheet/less" type="text/css" href="/public/css/style.less?v=1.1" media="all">
+  <link rel="stylesheet/less" type="text/css" href="/public/css/jquery-confirm.min-3.3.4.css" media="all">
   {* https://fontawesome.com/icons *}
 
   <!--[if lt IE 9]>
@@ -24,6 +25,8 @@
 
   <script src="/public/js/jquery-1.11.2.min.js"></script>
   <script src="/public/js/jquery-ui-1.11.4.min.js"></script>
+  {* https://craftpip.github.io/jquery-confirm/ *}
+  <script src="/public/js/jquery-confirm.min-3.3.4.js"></script>
   <script src="/public/js/script.js?v=1.1"></script>
   <script src="/public/js/less.min.js" type="text/javascript"></script>
   {* https://handlebarsjs.com/expressions.html *}
