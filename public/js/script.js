@@ -2,54 +2,52 @@
   $(window).load(function () { lazyLoad(); });
   $(window).on("scroll", function() {   });
   $(window).on("resize", function() {   });
-
-
-  /**
-   * Подгрузка элементов
-   */
-  function uploadMoreItems(url, element) {
-    var $preloader = $('#preloader');
-
-    $preloader.show();
-    $(element).hide();
-    $.ajax({
-      url: url,
-      success: function(data) {
-        var obj = $.parseJSON(data);
-        if (obj.complete) {
-          $preloader.hide();
-          $(element).replaceWith(obj.complete);
-          lazyLoad();
-
-          url = url.replace(/[&?]mode=upload/g, "");
-          window.history.pushState('', '', url);
-        } else {
-
-        }
-      },
-      error: function (error) {
-        console.log(error);
-      }
-    });
-
-  }
-
-  /**
-   * Фоновая загрузка изображений тега img.preview-image
-   */
-  function lazyLoad() {
-    var $images = $('.preview-image');
-
-    $images.each(function(){
-      var $img = $(this),
-        src = $img.attr('data-src');
-
-      $img.on('load', $(this).attr('class', 'loaded')).attr('src',src);
-    });
-  }
 });
 
+/**
+ * Подгрузка элементов
+ * @param url
+ * @param element
+ */
+function uploadMoreItems(url, element) {
+  var $preloader = $('#preloader');
 
+  $preloader.show();
+  $(element).hide();
+  $.ajax({
+    url: url,
+    success: function(data) {
+      var obj = $.parseJSON(data);
+      if (obj.complete) {
+        $preloader.hide();
+        $(element).replaceWith(obj.complete);
+        lazyLoad();
+
+        url = url.replace(/[&?]mode=upload/g, "");
+        window.history.pushState('', '', url);
+      } else {
+
+      }
+    },
+    error: function (error) {
+      console.log(error);
+    }
+  });
+}
+
+/**
+ * Фоновая загрузка изображений тега img.preview-image
+ */
+function lazyLoad() {
+  var $images = $('.preview-image');
+
+  $images.each(function(){
+    var $img = $(this),
+        src = $img.attr('data-src');
+
+    $img.on('load', $(this).attr('class', 'loaded')).attr('src',src);
+  });
+}
 
 /**
  * Подгружает контент полученый с Instagram
