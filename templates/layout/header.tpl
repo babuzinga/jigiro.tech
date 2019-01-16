@@ -34,6 +34,7 @@
 
 {* https://html5book.ru/html-tags/ *}
 <body>
+{if !$localhost}
 {literal}
   <!-- Yandex.Metrika counter -->
   <script type="text/javascript"> (function(m, e, t, r, i, k, a) {
@@ -49,8 +50,16 @@
   </noscript>
   <!-- /Yandex.Metrika counter -->
 {/literal}
+{/if}
+
   <main>
     <header>
+      <div class="jigiro-logo">
+        <a href="{$host_name}">
+          <img src="{$host_name}/public/image/jigiro-logo.svg" alt="jigiro">
+        </a>
+      </div>
+
       <ul class="desktop">
         {include file="blocks/menu-items.tpl"}
       </ul>
@@ -62,7 +71,9 @@
         <span class="hamburger-menu"></span>
       </div>
 
-      <ul class="mobile hidden">
-        {include file="blocks/menu-items.tpl"}
-      </ul>
+      <div class="mobile hidden">
+        <ul>
+          {include file="blocks/menu-items.tpl"}
+        </ul>
+      </div>
     </header>

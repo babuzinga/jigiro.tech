@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="100" viewBox="0 0 200 100">
+  <defs>
+    <style>
+      .cls-1 {
+        font-size: 66.666px;
+        fill: #fa311f;
+        font-family: Ahkio;
+      }
+    </style>
+  </defs>
+  <text id="jigiro" class="cls-1" x="40" y="68">jigiro</text>
+</svg>

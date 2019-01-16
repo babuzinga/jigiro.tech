@@ -3,8 +3,6 @@
 <section>
   <div class="content center-all">
     {*<h1><span>JIGIRO</span> SERVICE</h1>*}
-    <img src="{$host_name}/public/image/jigiro-logo.png" alt="jigiro">
-    <br/>
     <form onsubmit="uploadMediaInsta(); return false;">
       <p>
         Сервис позваляет скачать фото и видео из Instagram онлайн. Для скачивания
