@@ -16,7 +16,6 @@ class Service_Startup {
   }
 
   public static function sendHeaders() {
-    /*
     // запретим кэширование в браузере - Опера глючит из-за него?
     header('Expires: ' . gmdate('D, d M Y H:i:s') . ' GMT');
     header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
@@ -24,6 +23,5 @@ class Service_Startup {
     header('Cache-Control: post-check=0, pre-check=0', false);
     header('Pragma: no-cache');
     header('Content-type: text/html; charset=utf-8');
-    */
   }
 }

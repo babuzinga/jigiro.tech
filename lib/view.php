@@ -14,8 +14,10 @@ class View {
     $this->renderer->assign('author', '');
 
     $this->renderer->assign('localhost', HOST_TYPE == 'local');
-    $this->renderer->assign("host_name", PROTOCOL . HOST_NAME);
-    $this->renderer->assign("project_name", PROJECT_NAME_FULL);
+    $this->renderer->assign('host_name', PROTOCOL . HOST_NAME);
+    $this->renderer->assign('project_name', PROJECT_NAME);
+    $this->renderer->assign('current_url', $_SERVER['REDIRECT_URL']);
+    $this->renderer->assign('current_url_full', $_SERVER['REQUEST_URI']);
 
     $this->renderer->assign('current_user', getCurrentUser());
     $this->renderer->assign('smartphone', isSmartPhone());

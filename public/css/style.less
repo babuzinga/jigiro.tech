@@ -138,11 +138,28 @@ section {
   margin: 0 auto;
   max-width: @max_width;
 
+  form {
+    max-width: 300px;
+    display: block;
+    margin: 0 auto;
+  }
+
   div.content {
     padding: 20px 0;
-  }
-  div.content.center-all {
     text-align: center;
+  }
+
+  .user-data {
+    li {
+      display: block;
+      margin-bottom: 10px;
+      text-align: left;
+
+      span {
+        display: block;
+        font-weight: bold;
+      }
+    }
   }
 
   div.share-block {
@@ -162,6 +179,7 @@ section {
   label {
     display: block;
     margin-bottom: 10px;
+    text-align: left;
   }
 
   input.form-text {
@@ -238,6 +256,7 @@ section {
   #media-container.collection {
     margin-top: 10px;
     text-align: center;
+
     > div {
       margin: 8px -1px;
       padding: 0 5px 10px 5px;

@@ -3,11 +3,14 @@
 <section>
   <div class="content">
     {if !empty($medias)}
-      <h1>Сохраненное: <span>{$current_user->login}</span></h1>
+      <h1>Альбом <span>Все {$cnt}</span></h1>
       <div id="media-container" class="collection">
-        {foreach $medias as $media}
-          {include file="files/media.tpl"}
-        {/foreach}
+        {include file="files/items.tpl" upload=true}
+      </div>
+
+      <div class="spinner" id="preloader">
+        <div class="double-bounce1"></div>
+        <div class="double-bounce2"></div>
       </div>
     {else}
       <h1>Альбом пуст</h1>

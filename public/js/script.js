@@ -1,19 +1,57 @@
 ﻿$().ready(function(){
-  $(window).load(function () {   });
+  $(window).load(function () { lazyLoad(); });
   $(window).on("scroll", function() {   });
   $(window).on("resize", function() {   });
-
-  $(document).ready(function () {
-    $('.preview-image').on("load", function() {
-      var $img = $(this),
-        url = $img.data('img');
-      $img.attr('src', url);
-    });
-  });
 });
 
+/**
+ * Подгрузка элементов
+ */
+function uploadMoreItems(url, element) {
+  var $preloader = $('#preloader');
 
+  $preloader.show();
+  $(element).hide();
+  $.ajax({
+    url: url,
+    success: function(data) {
+      var obj = $.parseJSON(data);
+      if (obj.complete) {
+        $preloader.hide();
+        $(element).replaceWith(obj.complete);
+        lazyLoad();
 
+        url = url.replace(/[&?]mode=upload/g, "");
+        window.history.pushState('', '', url);
+      } else {
+
+      }
+    },
+    error: function (error) {
+      console.log(error);
+    }
+  });
+
+}
+
+/**
+ * Фоновая загрузка изображений тега img.preview-image
+ */
+function lazyLoad() {
+  var $images = $('.preview-image');
+
+  $images.each(function(){
+    var $img = $(this),
+        src = $img.attr('data-src');
+
+    $img.on('load', $(this).attr('class', 'loaded')).attr('src',src);
+  });
+}
+
+/**
+ * Подгружает контент полученый с Instagram
+ * @returns {boolean}
+ */
 function uploadMediaInsta() {
   var source   = $("#media-template").html(),
       template = Handlebars.compile(source),
@@ -60,10 +98,18 @@ function uploadMediaInsta() {
   });
 }
 
+/**
+ * Вставляет текст из буфера обмена
+ * @param id
+ */
 function pasteClipboard(id) {
 
 }
 
+/**
+ * Копирует текст из переданного элемента (element)
+ * @param element
+ */
 function copyToClipboard(element) {
   var $temp = $("<textarea>");
   $("body").append($temp);
@@ -72,6 +118,12 @@ function copyToClipboard(element) {
   $temp.remove();
 }
 
+/**
+ * Сохраняет медиа файл
+ * @param type
+ * @param url
+ * @param el
+ */
 function saveMedia(type, url, el) {
   var $el = $(el);
   $el.removeAttr('onclick').addClass('in-progress').html('Идет сохранение...');
@@ -84,8 +136,6 @@ function saveMedia(type, url, el) {
     },
     success: function(data) {
       var obj = $.parseJSON(data);
-      console.log(obj);
-
       if (obj.complete) {
         $el.replaceWith('<span>Сохранено</span>');
       } else {
@@ -98,6 +148,11 @@ function saveMedia(type, url, el) {
   });
 }
 
+/**
+ * Удаляет медиа файл из альбома пользователя
+ * @param id
+ * @param el
+ */
 function removeMedia(id, el) {
   $.confirm({
     title: 'Подтверждение!',
@@ -110,7 +165,6 @@ function removeMedia(id, el) {
             id: id
           },
           success: function(data) {
-            console.log(data);
             var obj = $.parseJSON(data);
 
             if (obj.complete) {

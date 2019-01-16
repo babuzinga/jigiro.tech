@@ -1,18 +1,18 @@
 {include file="layout/header.tpl"}
 
 <section>
-  <div class="content center-all">
+  <div class="content">
     {*<h1><span>JIGIRO</span> SERVICE</h1>*}
+    <p>
+      Сервис позваляет скачать фото и видео из Instagram онлайн. Для скачивания
+      необходимо указать ссылку на пост в Instagram, нажать кнопку &laquo;Загрузить&raquo; и
+      получить нужные фотографии или видео. Скачивание бесплатно и не требует регистрации.
+    </p>
+
+    <br/>
+
     <form onsubmit="uploadMediaInsta(); return false;">
-      <p>
-        Сервис позваляет скачать фото и видео из Instagram онлайн. Для скачивания
-        необходимо указать ссылку на пост в Instagram, нажать кнопку &laquo;Загрузить&raquo; и
-        получить нужные фотографии или видео. Скачивание бесплатно и не требует регистрации.
-      </p>
-      <br/>
-
       {*<div id="paste_clipboard" onclick="pasteClipboard('instagram_media_page_url')">Вставить из буфера</div>*}
-
       <input
         type="text"
         placeholder="Ссылка на пост в Instagram"

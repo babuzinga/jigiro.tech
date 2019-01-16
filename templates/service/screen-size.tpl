@@ -2,16 +2,24 @@
 
 <section>
   <div class="content">
-    Разрешение экрана в пикселях: <span id="size_monitor"></span>
-    <br/>
-    Разрешение экрана браузера в пикселях: <span id="size_browser"></span>
-    <br/>
-    Дополнительная информация:
-    <br/>
-    <b>{$user_ip}</b>
-    <br/>
-    <b>{$user_agent}</b>
-    <br/>
+    <ul class="user-data">
+      <li>
+        Разрешение экрана в пикселях
+        <span id="size_monitor"></span>
+      </li>
+      <li>
+        Разрешение экрана браузера в пикселях
+        <span id="size_browser"></span>
+      </li>
+      <li>
+        IP-адрес
+        <span>{$user_ip}</span>
+      </li>
+      <li>
+        Заголовок браузера
+        <span>{$user_agent}</span>
+      </li>
+    </ul>
   </div>
 </section>
 
