@@ -27,7 +27,7 @@
       <video controls src="{$media->getUrl()}"></video>
     {else}
       <a href="{$media->getOriginalUrl()}" target="_blank">
-        <img src="{$host_name}/public/image/preload-block.gif" data-img="{$media->getUrl('preview')}" onload="loadImage(this)"/>
+        <img src="{$host_name}/public/image/preload-block.gif" data-img="{$media->getUrl('preview')}" class="preview-image"/>
       </a>
     {/if}
   </div>

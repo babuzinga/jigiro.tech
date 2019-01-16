@@ -1,8 +1,15 @@
 ﻿$().ready(function(){
   $(window).load(function () {   });
-  $(document).ready(function () {   });
   $(window).on("scroll", function() {   });
   $(window).on("resize", function() {   });
+
+  $(document).ready(function () {
+    $('.preview-image').on("load", function() {
+      var $img = $(this),
+        url = $img.data('img');
+      $img.attr('src', url);
+    });
+  });
 });
 
 
@@ -55,12 +62,6 @@ function uploadMediaInsta() {
 
 function pasteClipboard(id) {
 
-}
-
-function loadImage(element) {
-  var $img = $(element),
-      url = $img.data('img');
-  $img.attr('src', url);
 }
 
 function copyToClipboard(element) {
