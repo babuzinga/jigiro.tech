@@ -8,7 +8,7 @@
   <link rel="shortcut icon" href="/public/img/icon-site.ico" type="image/x-icon">
 
   <link rel="stylesheet" type="text/css" href="/public/css/reset.css" media="all">
-  <link rel="stylesheet/less" type="text/css" href="/public/css/style.less" media="all">
+  <link rel="stylesheet/less" type="text/css" href="/public/css/style.less?v=1.1" media="all">
   {* https://fontawesome.com/icons *}
 
   <!--[if lt IE 9]>
