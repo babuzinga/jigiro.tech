@@ -56,7 +56,7 @@
     <header>
       <div class="jigiro-logo">
         <a href="{$host_name}">
-          <img src="{$host_name}/public/image/jigiro-logo.svg" alt="jigiro">
+          <img src="{$host_name}/public/image/jigiro-logo.svg?v=2" alt="jigiro">
         </a>
       </div>
 
