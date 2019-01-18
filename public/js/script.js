@@ -1,7 +1,9 @@
 ﻿$().ready(function(){
-  $(window).on("load",    function () { lazyLoad(); });
-  $(window).on("scroll",  function() {   });
-  $(window).on("resize",  function() {   });
+  $(window).load(function () { lazyLoad(); });
+  $(window).on("scroll", function() {   });
+  $(window).on("resize", function() {   });
+
+  alert(1);
 });
 
 /**
