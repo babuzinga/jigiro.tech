@@ -9,7 +9,6 @@
 
   <link rel="stylesheet" type="text/css" href="/public/css/reset.css" media="all">
   <link rel="stylesheet/less" type="text/css" href="/public/css/style.less?v=1.1" media="all">
-  <link rel="stylesheet/less" type="text/css" href="/public/css/jquery-confirm.min-3.3.4.css" media="all">
   {* https://fontawesome.com/icons *}
 
   <!--[if lt IE 9]>
@@ -23,10 +22,14 @@
   <meta name="keywords" content="{if !empty($keywords)}{$keywords}{/if}">
   <meta name="author" content="{if !empty($author)}{$author}{/if}">
 
+  {if empty($smartphone)}
   <script src="/public/js/jquery-1.11.2.min.js"></script>
-  <script src="/public/js/jquery-ui-1.11.4.min.js"></script>
-  {* https://craftpip.github.io/jquery-confirm/ *}
-  <script src="/public/js/jquery-confirm.min-3.3.4.js"></script>
+  <script>var isMobile=false</script>
+  {else}
+  <script src="/public/js/jquery.mobile-1.4.5.min.js"></script>
+  <script>var isMobile=true</script>
+  {/if}
+  {* <script src="/public/js/jquery-ui-1.11.4.min.js"></script> *}
   <script src="/public/js/script.js?v=1.1"></script>
   <script src="/public/js/less.min.js" type="text/javascript"></script>
   {* https://handlebarsjs.com/expressions.html *}
@@ -36,7 +39,7 @@
 </head>
 
 {* https://html5book.ru/html-tags/ *}
-<body>
+<body{if !empty($smartphone)} class="mobile"{/if}>
 {if !$localhost}
 {literal}
   <!-- Yandex.Metrika counter -->

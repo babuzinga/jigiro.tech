@@ -3,15 +3,11 @@
       gen_time_html = ((timing.responseEnd - timing.connectStart) / 1000).toFixed(4);
 
   $('#debug span').html(gen_time_html);
-
-  var current_page = window.location.toString();
-  console.log(current_page);
-  $.ajax({url: current_page, success:function(result){
-    lazyLoad();
-  }});
 });
 
-$(window).load(function () {  });
+$(window).load(function () { lazyLoad(); });
+$("body.mobile").on("pageload", function(event) { lazyLoad(); });
+
 $(window).on("scroll", function() {   });
 $(window).on("resize", function() {   });
 
@@ -165,33 +161,22 @@ function saveMedia(type, url, el) {
  * @param el
  */
 function removeMedia(id, el) {
-  $.confirm({
-    title: 'Подтверждение!',
-    content: 'Вы уверены что хотите удалить медиа файл?',
-    buttons: {
-      Удалить: function () {
-        $.ajax({
-          url: "/ajax/removeinstamedia/",
-          data: {
-            id: id
-          },
-          success: function(data) {
-            var obj = $.parseJSON(data);
+  $.ajax({
+    url: "/ajax/removeinstamedia/",
+    data: {
+      id: id
+    },
+    success: function(data) {
+      var obj = $.parseJSON(data);
 
-            if (obj.complete) {
-              $('#media-' + id).slideUp(function() {
-                $(this).remove();
-              });
-            }
-          },
-          error: function(error) {
-            console.log(error);
-          }
+      if (obj.complete) {
+        $('#media-' + id).slideUp(function() {
+          $(this).remove();
         });
-      },
-      Отмена: function () {
-
       }
+    },
+    error: function(error) {
+      console.log(error);
     }
   });
 }
