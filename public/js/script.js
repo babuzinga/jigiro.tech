@@ -1,10 +1,7 @@
-﻿$().ready(function(){
-  $(window).load(function () { lazyLoad(); });
-  $(window).on("scroll", function() {   });
-  $(window).on("resize", function() {   });
-
-  alert(1);
-});
+﻿alert(1);
+$(window).load(function () { lazyLoad(); });
+$(window).on("scroll", function() {   });
+$(window).on("resize", function() {   });
 
 /**
  * Подгрузка элементов
@@ -41,8 +38,9 @@ function uploadMoreItems(url, element) {
  * Фоновая загрузка изображений тега img.preview-image
  */
 function lazyLoad() {
+  alert(2);
+
   var $images = $('.preview-image');
-  alert(1);
   $images.each(function(){
     var $img = $(this),
         src = $img.attr('data-desktop');
