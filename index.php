@@ -4,7 +4,9 @@ if ($_SERVER['REQUEST_URI'] == '/ping/') { echo 'ok'; exit(); }
 
 define('BASE_DIR', dirname(__FILE__));
 ini_set('date.timezone', 'Asia/Vladivostok');
-$start = microtime(true);
+
+$st = microtime(true);
+$gen_time_sql = array();
 
 
 
@@ -42,13 +44,28 @@ mysql_close();
 
 
 
-$time = microtime(true) - $start;
-if (DEV_MODE) echo "
+if (DEV_MODE) :
+  $gen_time_php = round((microtime(true) - $st), 4);
+  $dt_db        = array_sum($gen_time_sql);
+
+  echo "
   <div id='debug'>
     <!-- controller_name :: {$controller_name}<br/>
     method_name :: {$method_name}<br/>
     params :: ".print_r($params,true)."<br/>
     <br/> -->
-    " . round($time,6) . " сек.
+
+    <table>
+    <tr>
+      <td>php</td><td>&nbsp;:&nbsp;</td><td>{$gen_time_php}</td>
+    </tr>
+    <tr>
+      <td>html</td><td>&nbsp;:&nbsp;</td><td><span>0</span></td>
+    </tr>
+    <tr>
+      <td>sql</td><td>&nbsp;:&nbsp;</td><td>{$dt_db}</td>
+    </tr>
+    </table>
   </div>
 ";
+endif;

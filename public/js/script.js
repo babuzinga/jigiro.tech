@@ -1,5 +1,17 @@
-﻿alert(1);
-$(window).load(function () { lazyLoad(); });
+﻿$(document).ready(function(){
+  var timing = window.performance.timing,
+      gen_time_html = ((timing.responseEnd - timing.connectStart) / 1000).toFixed(4);
+
+  $('#debug span').html(gen_time_html);
+
+  var current_page = window.location.toString();
+  console.log(current_page);
+  $.ajax({url: current_page, success:function(result){
+    lazyLoad();
+  }});
+});
+
+$(window).load(function () {  });
 $(window).on("scroll", function() {   });
 $(window).on("resize", function() {   });
 
@@ -38,8 +50,6 @@ function uploadMoreItems(url, element) {
  * Фоновая загрузка изображений тега img.preview-image
  */
 function lazyLoad() {
-  alert(2);
-
   var $images = $('.preview-image');
   $images.each(function(){
     var $img = $(this),

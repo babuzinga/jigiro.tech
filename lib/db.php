@@ -3,8 +3,12 @@ class DB {
   static $affected_rows;
   static $insert_id;
 
-  static function connect($host, $user, $password, $database, $collation = 'UTF-8') {
+  public static function connect($host, $user, $password, $database, $collation = 'UTF-8') {
+    global $gen_time_sql;
+    $st = microtime(true);
     $res = mysql_connect($host, $user, $password);
+    $gen_time_sql[] = round((microtime(true) - $st), 4);
+
     if ($res) $res = mysql_select_db($database);
     if (!$res) {
       self::logConnectionError(mysql_error());
@@ -13,11 +17,14 @@ class DB {
     mysql_query("SET NAMES " . $collation);
   }
 
-  static function query($sql) {
+  public static function query($sql) {
     if (func_num_args() > 1) $sql = self::prepare($args = func_get_args());
 
+    global $gen_time_sql;
     $st = microtime(true);
     $result = mysql_query($sql);
+    $gen_time_sql[] = round((microtime(true) - $st), 4);
+
     if (mysql_error()) DB::error($sql);
     self::$affected_rows = mysql_affected_rows();
     self::$insert_id = mysql_insert_id();
