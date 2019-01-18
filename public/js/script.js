@@ -6,8 +6,6 @@
 });
 
 $(window).load(function () { lazyLoad(); });
-$("body.mobile").on("pageload", function(event) { lazyLoad(); });
-
 $(window).on("scroll", function() {   });
 $(window).on("resize", function() {   });
 
@@ -51,7 +49,7 @@ function lazyLoad() {
     var $img = $(this),
         src = $img.attr('data-desktop');
 
-    $img.on('load', $(this).attr('class', 'loaded')).attr('src',src);
+    $img.on('load', function(){ $(this).attr('class', 'loaded') }).attr('src', src);
   });
 }
 
