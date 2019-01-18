@@ -44,7 +44,7 @@ mysql_close();
 
 
 
-if (DEV_MODE) :
+if (DEV_MODE or (!empty($_GET['mode']) && $_GET['mode'] == 'debug')) :
   $gen_time_php = round((microtime(true) - $st), 4);
   $dt_db        = array_sum($gen_time_sql);
 
@@ -64,6 +64,9 @@ if (DEV_MODE) :
     </tr>
     <tr>
       <td>sql</td><td>&nbsp;:&nbsp;</td><td>{$dt_db}</td>
+    </tr>
+    <tr>
+      <td colspan='2' id='debug_console'></td>
     </tr>
     </table>
   </div>
