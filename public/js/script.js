@@ -40,10 +40,10 @@ function uploadMoreItems(url, element) {
  */
 function lazyLoad() {
   var $images = $('.preview-image');
-
+  alert(1);
   $images.each(function(){
     var $img = $(this),
-        src = $img.attr('data-src');
+        src = $img.attr('data-desktop');
 
     $img.on('load', $(this).attr('class', 'loaded')).attr('src',src);
   });
