@@ -1,8 +1,14 @@
-﻿$(document).ready(function(){
+﻿$(document).ready(function() {
   var timing = window.performance.timing,
       gen_time_html = ((timing.responseEnd - timing.connectStart) / 1000).toFixed(4);
 
   $('#debug span').html(gen_time_html);
+
+
+  $('#upload-item').click(function() {
+    $('#debug_console').html('click1');
+  });
+
   $('#upload-item').on('click', function() {
     $('#debug_console').html('click');
     uploadMoreItems($(this).data('url'));
