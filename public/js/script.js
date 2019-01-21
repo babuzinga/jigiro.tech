@@ -4,15 +4,7 @@
 
   $('#debug span').html(gen_time_html);
 
-
-  $('#upload-item').click(function() {
-    $('#debug_console').html('click1');
-  });
-
-  $('#upload-item').on('click', function() {
-    $('#debug_console').html('click');
-    uploadMoreItems($(this).data('url'));
-  });
+  $("section").on("click", "#upload-item", function() { uploadMoreItems($(this).data('url')); });
   $('.preview-image').on('load', function() { console.log(1); lazyLoad($(this)); });
 });
 
