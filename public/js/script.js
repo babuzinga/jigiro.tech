@@ -3,11 +3,15 @@
       gen_time_html = ((timing.responseEnd - timing.connectStart) / 1000).toFixed(4);
 
   $('#debug span').html(gen_time_html);
+  $('#upload-item').on('click', function() { uploadMoreItems($(this).data('url')); });
+  $('.preview-image').on('load', function() { console.log(1); lazyLoad($(this)); });
 });
 
 $(window).load(function () { lazyLoad(); });
 $(window).on("scroll", function() {   });
 $(window).on("resize", function() {   });
+
+
 
 /**
  * Подгрузка элементов
@@ -15,17 +19,18 @@ $(window).on("resize", function() {   });
  * @param element
  */
 function uploadMoreItems(url, element) {
-  var $preloader = $('#preloader');
+  var $preloader = $('#preloader'),
+      $button = $('#upload-item');
 
   $preloader.show();
-  $(element).hide();
+  $button.hide();
   $.ajax({
     url: url,
     success: function(data) {
       var obj = $.parseJSON(data);
       if (obj.complete) {
         $preloader.hide();
-        $(element).replaceWith(obj.complete);
+        $button.replaceWith(obj.complete);
         lazyLoad();
 
         url = url.replace(/[&?]mode=upload/g, "");

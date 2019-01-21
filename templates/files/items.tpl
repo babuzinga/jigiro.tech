@@ -9,6 +9,7 @@
   <button
     type="button"
     class="button"
-    onclick="uploadMoreItems('{$current_url}?page={$next_page}&mode=upload', this)"
+    id="upload-item"
+    data-url="{$current_url}?page={$next_page}&mode=upload"
     >Загрузить еще</button>
 {/if}
