@@ -3,7 +3,10 @@
       gen_time_html = ((timing.responseEnd - timing.connectStart) / 1000).toFixed(4);
 
   $('#debug span').html(gen_time_html);
-  $('#upload-item').on('click', function() { uploadMoreItems($(this).data('url')); });
+  $('#upload-item').on('click', function() {
+    $('#debug_console').html('click');
+    uploadMoreItems($(this).data('url'));
+  });
   $('.preview-image').on('load', function() { console.log(1); lazyLoad($(this)); });
 });
 
