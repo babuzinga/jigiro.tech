@@ -8,7 +8,7 @@
   <link rel="shortcut icon" href="/public/img/icon-site.ico" type="image/x-icon">
 
   <link rel="stylesheet" type="text/css" href="/public/css/reset.css" media="all">
-  <link rel="stylesheet/less" type="text/css" href="/public/css/style.less?v=1.1" media="all">
+  <link rel="stylesheet/less" type="text/css" href="/public/css/style.less?v=1.11" media="all">
   {* https://fontawesome.com/icons *}
 
   <!--[if lt IE 9]>
@@ -24,7 +24,7 @@
 
   <script src="/public/js/jquery-1.11.2.min.js"></script>
   {* <script src="/public/js/jquery-ui-1.11.4.min.js"></script> *}
-  <script src="/public/js/script.js?v=1.1"></script>
+  <script src="/public/js/script.js?v=1.11"></script>
   <script src="/public/js/less.min.js" type="text/javascript"></script>
   {* https://handlebarsjs.com/expressions.html *}
   <script src="/public/js/handlebars-v4.0.12.js" type="text/javascript"></script>
