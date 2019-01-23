@@ -261,7 +261,7 @@ section {
       margin: 8px -1px;
       padding: 0 5px 10px 5px;
       display: inline-block;
-      width: 190px;
+      max-width: 190px;
       vertical-align: top;
       text-align: left;
     }
@@ -491,6 +491,17 @@ footer {
           display: inline-block;
           margin-left: 10px;
         }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 420px) {
+  section {
+
+    #media-container.collection {
+      > div {
+        max-width: 390px;
       }
     }
   }

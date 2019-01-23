@@ -65,7 +65,7 @@ function lazyLoad() {
   var $images = $('.preview-image');
   $images.each(function(){
     var $img = $(this),
-        src = $img.attr('data-desktop');
+        src = $img.attr('data-src');
 
     $img.on('load', function(){ $(this).attr('class', 'loaded') }).attr('src', src);
   });
