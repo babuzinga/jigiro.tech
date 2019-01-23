@@ -6,10 +6,12 @@
   <br/>
   {assign var=next_page value=$current_page+1}
 
-  <button
+  <input
     type="button"
     class="button"
     id="upload-item"
     data-url="{$current_url}?page={$next_page}&mode=upload"
-    >Загрузить еще</button>
+    onclick="uploadMoreItems(this);"
+    value="Загрузить еще"
+    >
 {/if}

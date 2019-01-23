@@ -3,13 +3,22 @@
       gen_time_html = ((timing.responseEnd - timing.connectStart) / 1000).toFixed(4);
 
   $('#debug span').html(gen_time_html);
-
-  $("section").on("click", "#upload-item", function() { uploadMoreItems($(this).data('url')); });
   $('.preview-image').on('load', function() { lazyLoad($(this)); });
 });
 
 $(window).load(function () { lazyLoad(); });
-$(window).on("scroll", function() {   });
+
+var scroll_top, doc_height;
+$(window).on("scroll", function() {
+  // Пользователь долистал до низа страницы
+  scroll_top =  $(window).scrollTop();
+  doc_height = $(document).height() - $(window).height();
+  //console.log(scroll_top + ' ' + doc_height);
+  if  (scroll_top >= (doc_height - 200)) {
+    if ($('#upload-item').length) uploadMoreItems('#upload-item');
+  }
+});
+
 $(window).on("resize", function() {   });
 
 
@@ -19,9 +28,10 @@ $(window).on("resize", function() {   });
  * @param url
  * @param element
  */
-function uploadMoreItems(url, element) {
-  var $preloader = $('#preloader'),
-      $button = $('#upload-item');
+function uploadMoreItems(element) {
+  var $button = $(element),
+      $preloader = $('#preloader'),
+      url = $button.data('url');
 
   $preloader.show();
   $button.hide();
@@ -33,9 +43,11 @@ function uploadMoreItems(url, element) {
         $preloader.hide();
         $button.replaceWith(obj.complete);
         lazyLoad();
-
+        /*
+        // Смена страницы
         url = url.replace(/[&?]mode=upload/g, "");
         window.history.pushState('', '', url);
+        */
       } else {
 
       }
