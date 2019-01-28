@@ -43,7 +43,7 @@ class View {
     $view = new View();
     $view->add('title', $title);
     $view->add('reason', $reason);
-    $view->template = 'templates/errors/error.tpl';
+    $view->template = 'errors/error.tpl';
 
     return $view->render();
   }

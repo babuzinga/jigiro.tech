@@ -5,6 +5,7 @@ CREATE TABLE `profiles` (
   `dt` DATETIME NULL DEFAULT NULL,
   `login` VARCHAR(200) NULL DEFAULT '' COMMENT 'логин',
   `password` VARCHAR(200) NULL DEFAULT '' COMMENT 'пароль в md5',
+	`token` VARCHAR(200) NULL DEFAULT '' COMMENT 'хэш идентификатор (токен)',
   PRIMARY KEY (`id`)
 )
 COMMENT='пользователи'

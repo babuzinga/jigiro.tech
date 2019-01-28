@@ -22,6 +22,7 @@ class Controller_Api extends Controller {
 
   public static $action_map = array(
     'media' => 'GetMediaWithInstagram',
+    'variable-handler' => 'VariableHandler',
   );
 
   /**
@@ -202,6 +203,10 @@ class Controller_Api extends Controller {
     }
   }
 
+  /**
+   * @param $url
+   * @return mixed
+   */
   private function getInstagramPage($url) {
     $parse = parse_url($url);
     $url .= ((substr($url, -1) != '/') ? '/' : '') . (!empty($parse['query']) ? '&' : '?') . '__a=1';
@@ -213,5 +218,51 @@ class Controller_Api extends Controller {
     curl_close($ch);
 
     return json_decode($response);
+  }
+
+  /**
+   * Сохранение/получение/удаление переменных API запросами
+   */
+  public function apiVariableHandler() {
+    $actions = array(
+      'add',        // Добавление переменной
+      'set',        // Установка нового значения
+      'get',        // Получние значения переменной
+      'remove',     // Удаление переменной
+
+      'get_all',    // Получение всех переменных
+      'remove_all', // Удаление всех переменных
+    );
+
+
+    // Проверка наличия обязательного параметра token (уникальный идентификатор) в api-запросе
+    if (empty($_GET['token']))
+      $this->errorResponse(self::E_TOKEN_REUIRED);
+    // Проверка наличия токена в бд
+    $token = Request::getStr('token');
+    $token = DB::scalarSelect('SELECT token FROM profiles WHERE token=?', $token);
+    if (empty($token))
+      $this->errorResponse(self::E_INVALID_TOKEN);
+
+    // Проверка наличия обязательного параметра action в api-запросе
+    if (empty($_GET['action']))
+      $this->errorResponse(self::E_REQUIRED_PARAMETER_MISSING, array(':param' => 'action'), 400);
+    $action = Request::getStr('action');
+
+    if (!in_array($action, $actions))
+      $this->errorResponse(self::E_INVALID_PARAMETER_VALUE, array(':param' => 'action'), 400);
+
+
+
+
+    if (empty($_GET['name']))
+      $this->errorResponse(self::E_REQUIRED_PARAMETER_MISSING, array(':param' => 'name'), 400);
+    $name = Request::getStr('name');
+
+
+    if (empty($_GET['name']))
+      $this->errorResponse(self::E_REQUIRED_PARAMETER_MISSING, array(':param' => 'name'), 400);
+
+    exit();
   }
 }

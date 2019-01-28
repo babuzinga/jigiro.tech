@@ -13,6 +13,7 @@ class Model_Profile extends Model {
       'dt',
       'login',
       'password',
+      'token',
     );
 
     if ($id) $this->getData($id);

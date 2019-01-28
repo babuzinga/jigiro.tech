@@ -63,4 +63,26 @@ class Controller_User extends Controller {
       setCurrentUser($profile);
     }
   }
+
+  /**
+   * http://www.jt1.local/user/my-api-variables
+   *
+   * Метод для работы с перемнными пользователя, полученных через API запросы
+   *
+   * ALTER TABLE `profiles` ADD COLUMN `token` VARCHAR(200) NULL DEFAULT '' COMMENT 'хэш идентификатор (токен)' AFTER `password`;
+   *
+   * @return string
+   */
+  public function my_Api_Variables() {
+    $cu = getCurrentUser();
+
+    if (empty($cu))
+      return View::error403('Раздел доступен только зарегистрированным пользователям');
+
+
+
+    $view = new View();
+    $view->template = 'user/my-variables.tpl';
+    return $view->render();
+  }
 }
