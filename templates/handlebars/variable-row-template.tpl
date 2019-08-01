@@ -1,0 +1,27 @@
+{literal}
+  <script id="variable-row-template" type="text/x-handlebars-template">
+    <tr>
+      <td></td>
+      <td>
+        <input 
+          type="text" 
+          placeholder="Имя"
+          class="form-text"
+          value=""
+          name="name[]"
+        >
+      </td>
+      <td>&nbsp;&nbsp;=&nbsp;&nbsp;</td>
+      <td>
+        <input 
+          type="text" 
+          placeholder="Значение"
+          class="form-text"
+          value=""
+          name="value[]"
+        >
+      </td>
+      <td></td>
+    </tr>
+  </script>
+{/literal}

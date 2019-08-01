@@ -20,19 +20,20 @@ foreach(glob("model/*.php") as $file) include $file;
 
 include 'lib/smarty3/Smarty.class.php';
 
-Service_Startup::connectDatabase();
-Service_Startup::sendHeaders();
-
-Controller_User::rememberMe();
-
-// TODO --- http://php.net/manual/ru/language.exceptions.php
-// Если переданны данные
 try {
+  Service_Startup::connectDatabase();
+  Service_Startup::sendHeaders();
+
+  Controller_User::rememberMe();
+
+  // TODO --- http://php.net/manual/ru/language.exceptions.php
+  // Если переданны данные
   list($controller_name, $method_name, $params) = Core::parse_url();
   $controller = new $controller_name();
   // Вызывается метод, с передачей массива параметров
   $response = $controller->run($method_name, $params);
 } catch (Exception $e) {
+  //print_array($e);
   $controller = new View();
   $response = View::error404($e->getMessage());
 }

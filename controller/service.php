@@ -9,4 +9,11 @@ class Controller_Service extends Controller {
 
     return $view->render();
   }
+
+  public function use_curl() {
+    $view = new View();
+    $view->template = 'service/use-curl.tpl';
+
+    return $view->render();
+  }
 }

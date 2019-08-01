@@ -22,6 +22,7 @@ class Controller_Api extends Controller {
 
   public static $action_map = array(
     'media' => 'GetMediaWithInstagram',
+    'send-request-curl' => 'GetHtmlPage',
     'variable-handler' => 'VariableHandler',
   );
 
@@ -150,6 +151,24 @@ class Controller_Api extends Controller {
         'info' => $array_info
       );
       $this->response($result);
+    else :
+      $this->errorResponse(self::E_INVALID_PARAMETER_VALUE, array(':param' => 'url'), 400);
+    endif;
+  }
+
+  public function apiGetHtmlPage() {
+    $url = Request::getStr('url_request');
+
+    if (!empty($url)) :
+      $ch = curl_init();
+      curl_setopt($ch, CURLOPT_URL, $url);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+      $response = curl_exec($ch);
+      curl_close($ch);
+
+      $result = json_decode($response);
+
+      $this->response(!empty($result) ? $result : 'Возвращен пустой ответ');
     else :
       $this->errorResponse(self::E_INVALID_PARAMETER_VALUE, array(':param' => 'url'), 400);
     endif;

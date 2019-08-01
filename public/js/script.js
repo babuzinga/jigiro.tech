@@ -21,7 +21,61 @@ $(window).on("scroll", function() {
 
 $(window).on("resize", function() {   });
 
+/**
+ * Добавление поля для вставки перемнной
+ */
+function addVariableRow() {
+  var source   = $("#variable-row-template").html(),
+      template = Handlebars.compile(source),
+      $variable_table = $("#variable-table tbody");
 
+  $variable_table.append(template);
+  $variable_table.find('tr').each(function(i, elem) {
+    $(elem).find('td:nth-child(1)').html(i+1+'.');
+    if (i != 0) $(elem).find('td:nth-child(5)').html('[R]');
+  });
+}
+
+function sendRequestCurl() {
+  var url_request = $('#url_request').val(),
+      $submit_button = $('#submit_button'),
+      $preloader = $('#preloader'),
+      $success = $('#success');
+
+  if (!url_request) {
+    $('#error').show().html('Укажите адрес запроса');
+    return false;
+  }
+
+  $success.hide();
+  $submit_button.hide();
+  $preloader.fadeIn(function(){
+    $.ajax({
+      url: "/api/send-request-curl/",
+      data: {
+        url_request: url_request
+      },
+      success: function(obj) {
+        $('#error').hide();
+        $('#media-container').html(obj);
+
+        $preloader.hide();
+        $submit_button.show();
+        $success.show();
+      },
+      error: function (error) {
+        console.log(error.responseJSON);
+        var error = error.responseJSON.description;
+
+        $('#error').show().html(error);
+
+        $preloader.hide();
+        $submit_button.show();
+        $success.hide();
+      }
+    });
+  });
+}
 
 /**
  * Подгрузка элементов
@@ -120,6 +174,8 @@ function uploadMediaInsta() {
     });
   });
 }
+
+
 
 /**
  * Вставляет текст из буфера обмена
