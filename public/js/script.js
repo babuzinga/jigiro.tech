@@ -4,6 +4,28 @@
 
   $('#debug span').html(gen_time_html);
   $('.preview-image').on('load', function() { lazyLoad($(this)); });
+  $('.close-shadow-page').click(function() { $('.shadow-page').fadeOut(); });
+
+  var $date_select,
+      $td_value = $('.date-select').find('td.value'),
+      $li_dt = $('.date-select').find('li'),
+      dt_value = 0,
+      dt_name = 0;
+
+  $td_value.click(function(){ 
+    dt_name = $(this).data('name');
+    $('.date-select.date-'+dt_name).find('.shadow-page').fadeIn(); 
+  });
+  $li_dt.click(function() {
+    dt_value = $(this).data('value');
+    dt_name = $(this).data('name');
+    $date_select = $('.date-select.date-'+dt_name);
+    $date_select.find('td.value').html(dt_value);
+    $date_select.find('li').removeClass('current');
+    $date_select.find('input').val(dt_value);
+    $(this).addClass('current');
+    $('.shadow-page').fadeOut();
+  });
 });
 
 $(window).load(function () { lazyLoad(); });
@@ -36,6 +58,9 @@ function addVariableRow() {
   });
 }
 
+/**
+ * Отправка и получения запроса curl 
+ */
 function sendRequestCurl() {
   var url_request = $('#url_request').val(),
       $submit_button = $('#submit_button'),
@@ -54,6 +79,64 @@ function sendRequestCurl() {
       url: "/api/send-request-curl/",
       data: {
         url_request: url_request
+      },
+      success: function(obj) {
+        $('#error').hide();
+        $('#media-container').html(obj);
+
+        $preloader.hide();
+        $submit_button.show();
+        $success.show();
+      },
+      error: function (error) {
+        console.log(error.responseJSON);
+        var error = error.responseJSON.description;
+
+        $('#error').show().html(error);
+
+        $preloader.hide();
+        $submit_button.show();
+        $success.hide();
+      }
+    });
+  });
+}
+
+/**
+ Построить расчет затрат
+ */
+function buildCalculation() {
+  var amount_money = $('#amount_money').val(),
+      dt_start = $('input[name=dt_start]').val(),
+      dt_end = $('input[name=dt_end]').val(),
+      $submit_button = $('#submit_button'),
+      $preloader = $('#preloader'),
+      $success = $('#success');
+
+  if (!amount_money) {
+    $('#error').show().html('Укажите сумму');
+    return false;
+  }
+
+  if (!dt_start) {
+    $('#error').show().html('Укажите начало периода');
+    return false;
+  }
+
+  if (!dt_end) {
+    $('#error').show().html('Укажите конец периода');
+    return false;
+  }
+
+  $success.hide();
+  $submit_button.hide();
+  $preloader.fadeIn(function(){
+    $.ajax({
+      url: "/ajax/buildcalculation/",
+      data: {
+        amount_money: amount_money,
+        dt_start: dt_start,
+        dt_end: dt_end
       },
       success: function(obj) {
         $('#error').hide();
@@ -175,7 +258,9 @@ function uploadMediaInsta() {
   });
 }
 
-
+function sendAjax() {
+  
+}
 
 /**
  * Вставляет текст из буфера обмена

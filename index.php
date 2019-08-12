@@ -26,9 +26,11 @@ try {
 
   Controller_User::rememberMe();
 
+  $core = new Core();
+
   // TODO --- http://php.net/manual/ru/language.exceptions.php
   // Если переданны данные
-  list($controller_name, $method_name, $params) = Core::parse_url();
+  list($controller_name, $method_name, $params) = $core->parse_url();
   $controller = new $controller_name();
   // Вызывается метод, с передачей массива параметров
   $response = $controller->run($method_name, $params);

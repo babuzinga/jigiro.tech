@@ -9,9 +9,6 @@ class Controller {
     if (isset($_SESSION['errors'])) $this->errors = $_SESSION['errors'];
   }
 
-  public function index() {
-  }
-
   public function run($handler, $params) {
     $this->params = $params;
     return $this->$handler();

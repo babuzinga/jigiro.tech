@@ -251,7 +251,7 @@ class DB {
       throw new ExceptionNotAvailable();
     }
 
-    $str = "Ошибка при выполнении запроса: " . $sql . "\r\n<br>";
+    $str = "Ошибка при выполнении SQL запроса: " . $sql . "\r\n<br>";
     $str .= "Описание ошибки: " . $info . "\r\n";
     $str .= "Адрес по которому произошла ошибка: " . $_SERVER['REQUEST_URI'] . "\r\n";
     $str .= "\r\n";
@@ -274,7 +274,7 @@ class ExceptionDB extends Exception {
   public function __construct($sql, $info) {
     $this->sql = $sql;
     $this->info = $info;
-    parent::__construct("Ошибка при выполнении запроса.");
+    parent::__construct("Ошибка при выполнении SQL запроса.");
   }
 }
 

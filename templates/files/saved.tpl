@@ -8,10 +8,7 @@
         {include file="files/items.tpl" upload=true}
       </div>
 
-      <div class="spinner" id="preloader">
-        <div class="double-bounce1"></div>
-        <div class="double-bounce2"></div>
-      </div>
+      {include file="blocks/preloader.tpl"}
     {else}
       <h1>Альбом пуст</h1>
     {/if}

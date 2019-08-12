@@ -93,6 +93,27 @@ require_once SMARTY_SYSPLUGINS_DIR . 'smarty_template_source.php';
 require_once SMARTY_SYSPLUGINS_DIR . 'smarty_template_resource_base.php';
 require_once SMARTY_SYSPLUGINS_DIR . 'smarty_internal_resource_file.php';
 
+function smarty_function_myblock($params, &$smarty) {
+    if(isset($params['handler']))
+    {
+        list($controllerClass,$event) = explode('.',$params['handler']);
+        if($controllerClass=='Controller_Blocks')
+        {
+            return Controller_Blocks::$event($params);
+        }
+        else
+        {
+            $controller = new $controllerClass();
+            return $controller->run($event,$params);
+        }
+    }
+    if(isset($params['type']))
+    {
+        $controller = new Controller_Blocks();
+        return $controller->run("block",$params);
+    }
+}
+
 /**
  * This is the main Smarty class
  *

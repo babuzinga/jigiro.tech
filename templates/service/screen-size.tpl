@@ -2,7 +2,7 @@
 
 <section>
   <div class="content">
-    <ul class="user-data">
+    <ul class="data-list">
       <li>
         Разрешение экрана в пикселях
         <span id="size_monitor"></span>

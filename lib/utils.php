@@ -26,11 +26,13 @@ function complete_removal_directory($directory) {
 
 // Возвращает полное имя контроллера
 function collectNameController($name) {
+  if (substr($name, 0, 9) == 'Controller_') return $name;
   return 'Controller_' . ucfirst(strtolower($name));
 }
 
 // Возвращает полное имя модели
 function collectNameModel($name) {
+  if (substr($name, 0, 6) == 'Model_') return $name;
   return 'Model_' . ucfirst(strtolower($name));
 }
 
