@@ -38,8 +38,8 @@
       <div class="data-block">
         <span class="title">Переменные :</span>
 
-        <table id="variable-table">
-        <tbody>
+        <table class="value-table">
+        <tbody id="variables">
         <tr>
           <td>1.</td>
           <td>
@@ -61,16 +61,21 @@
               name="value[]"
             >
           </td>
-          <td></td>
+          <td>
+            <span 
+              class="link" 
+              onclick="addValueRow('variables', 'variable-row-template')"
+              >
+              [N]
+            </span>
+          </td>
         </tr>
         </tbody>
         </table>
-
-        <div>
-          <span class="link" onclick="addVariableRow()">Добавить переменную</span>
-        </div>
       </div>
+
       <div id="error" class="error hidden"></div>
+
       <button 
         type="button" 
         class="button" 

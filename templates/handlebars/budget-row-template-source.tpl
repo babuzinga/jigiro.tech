@@ -1,0 +1,27 @@
+{literal}
+  <script id="budget-row-template-source" type="text/x-handlebars-template">
+    <tr>
+      <td></td>
+      <td>
+          <input 
+            type="text" 
+            placeholder="Источник"
+            class="form-text" 
+            value=""
+            name="budget_name_source[]"
+          >
+        </td>
+      <td>&nbsp;&nbsp;-&nbsp;&nbsp;</td>
+      <td>
+        <input 
+          type="text" 
+          placeholder="Сумма"
+          value="" 
+          class="form-text" 
+          name="budget_amount_source[]"
+        >
+      </td>
+      <td></td>
+    </tr>
+  </script>
+{/literal}

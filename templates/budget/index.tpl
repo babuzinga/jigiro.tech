@@ -3,21 +3,12 @@
 <section>
   <div class="content">
     <p>
-      Составления плана ежедневных затрат
+      Составления бюджета
     </p>
 
     <br/>
 
-    <form onsubmit="buildCalculation(); return false;">
-      <input 
-        type="text" 
-        placeholder="Сумма"
-        id="amount_money"
-        class="form-text"
-        value="3000"
-        onclick="this.select();"
-        >
-      
+    <form onsubmit="buildBudget(); return false;">
       {myblock handler="Controller_Blocks.blockSetDate" name='dt_start' desc='Выберите начало периода'}
       {myblock handler="Controller_Blocks.blockSetDate" name='dt_end' desc='Выберите конец периода'}
 
@@ -26,9 +17,11 @@
         type="button" 
         class="button" 
         id="submit_button" 
-        onclick="buildCalculation()"
-        >Расчитать</button>
+        onclick="buildBudget()"
+        >Сформировать</button>
     </form>
+
+    <br/>
 
     {include file="blocks/ajax-response.tpl"}
   </div>

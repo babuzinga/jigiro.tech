@@ -11,22 +11,7 @@
   <input type="text" name="{$name}" value="{$current_day}">
 
   <div class="shadow-page">
-    <div>
-      <p class="month-title">{$month_title}</p>
-
-      <ul>
-      {foreach from=$date_array key=value item=item}
-        <li
-          data-value="{$value}"
-          data-name="{$name}"
-          class="{if !empty($item.class)}{$item.class}{/if}{if $current_day==$value} current{/if}"
-          >{$item.date}
-        </li>
-      {/foreach}
-      </ul>
-
-      <span class="close-shadow-page link">Закрыть</span>
-    </div>
+    {include file="blocks/calendar.tpl"}
   </div>
 </div>
 {/if}

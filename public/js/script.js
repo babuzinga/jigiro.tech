@@ -4,8 +4,7 @@
 
   $('#debug span').html(gen_time_html);
   $('.preview-image').on('load', function() { lazyLoad($(this)); });
-  $('.close-shadow-page').click(function() { $('.shadow-page').fadeOut(); });
-
+  
   var $date_select,
       $td_value = $('.date-select').find('td.value'),
       $li_dt = $('.date-select').find('li'),
@@ -16,16 +15,21 @@
     dt_name = $(this).data('name');
     $('.date-select.date-'+dt_name).find('.shadow-page').fadeIn(); 
   });
-  $li_dt.click(function() {
-    dt_value = $(this).data('value');
-    dt_name = $(this).data('name');
+  $('.date-select').on('click', 'li', function(el) {
+    dt_value = el.currentTarget.dataset.value;
+    dt_name = el.currentTarget.dataset.name;
+
     $date_select = $('.date-select.date-'+dt_name);
     $date_select.find('td.value').html(dt_value);
     $date_select.find('li').removeClass('current');
     $date_select.find('input').val(dt_value);
-    $(this).addClass('current');
+    $(el.currentTarget).addClass('current');
     $('.shadow-page').fadeOut();
   });
+
+  var $main = $('main');
+  $main.on('click', '.v-blind thead tr', function() { $(this).parents('table').toggleClass('down'); });
+  $main.on('click', '.close-shadow-page', function() { $('.shadow-page').fadeOut(); });
 });
 
 $(window).load(function () { lazyLoad(); });
@@ -44,17 +48,18 @@ $(window).on("scroll", function() {
 $(window).on("resize", function() {   });
 
 /**
- * Добавление поля для вставки перемнной
+ * Добавление поля для вставки переменной
  */
-function addVariableRow() {
-  var source   = $("#variable-row-template").html(),
+function addValueRow(item, row, obj) {
+  var source   = $("#" + row).html(),
       template = Handlebars.compile(source),
-      $variable_table = $("#variable-table tbody");
+      $placing = $("#" + item);
 
-  $variable_table.append(template);
-  $variable_table.find('tr').each(function(i, elem) {
+  html = template(obj);
+  $placing.append(html);
+  $placing.find('tr').each(function(i, elem) {
     $(elem).find('td:nth-child(1)').html(i+1+'.');
-    if (i != 0) $(elem).find('td:nth-child(5)').html('[R]');
+    if (i != 0) $(elem).find('td:nth-child(5)').html('<span>[R]</span>');
   });
 }
 
@@ -62,101 +67,52 @@ function addVariableRow() {
  * Отправка и получения запроса curl 
  */
 function sendRequestCurl() {
-  var url_request = $('#url_request').val(),
-      $submit_button = $('#submit_button'),
-      $preloader = $('#preloader'),
-      $success = $('#success');
+  var $error = $('#error'),
+      url_request = $('#url_request').val(),
+      params;
 
-  if (!url_request) {
-    $('#error').show().html('Укажите адрес запроса');
-    return false;
-  }
+  if (!url_request) { $error.show().html('Укажите адрес запроса'); return false; }
 
-  $success.hide();
-  $submit_button.hide();
-  $preloader.fadeIn(function(){
-    $.ajax({
-      url: "/api/send-request-curl/",
-      data: {
-        url_request: url_request
-      },
-      success: function(obj) {
-        $('#error').hide();
-        $('#media-container').html(obj);
-
-        $preloader.hide();
-        $submit_button.show();
-        $success.show();
-      },
-      error: function (error) {
-        console.log(error.responseJSON);
-        var error = error.responseJSON.description;
-
-        $('#error').show().html(error);
-
-        $preloader.hide();
-        $submit_button.show();
-        $success.hide();
-      }
-    });
-  });
+  params = { url_request: url_request };
+  
+  sendAjax(params, "/api/send-request-curl/", $('#success'), $('#submit_button'), $('#preloader'), $('#media-container'), $error);
 }
 
 /**
  Построить расчет затрат
  */
-function buildCalculation() {
-  var amount_money = $('#amount_money').val(),
+function buildBudget() {
+  var $error = $('#error'),
       dt_start = $('input[name=dt_start]').val(),
-      dt_end = $('input[name=dt_end]').val(),
-      $submit_button = $('#submit_button'),
-      $preloader = $('#preloader'),
-      $success = $('#success');
+      dt_end = $('input[name=dt_end]').val();
 
-  if (!amount_money) {
-    $('#error').show().html('Укажите сумму');
-    return false;
-  }
+  if (!dt_start) { $error.show().html('Укажите начало периода'); return false; }
+  if (!dt_end) { $error.show().html('Укажите конец периода'); return false; }
 
-  if (!dt_start) {
-    $('#error').show().html('Укажите начало периода');
-    return false;
-  }
+  params = {
+    dt_start: dt_start,
+    dt_end: dt_end
+  };
 
-  if (!dt_end) {
-    $('#error').show().html('Укажите конец периода');
-    return false;
-  }
+  sendAjax(params, "/budget/build/", $('#success'), $('#submit_button'), $('#preloader'), $('#media-container'), $error);
+}
 
-  $success.hide();
-  $submit_button.hide();
-  $preloader.fadeIn(function(){
-    $.ajax({
-      url: "/ajax/buildcalculation/",
-      data: {
-        amount_money: amount_money,
-        dt_start: dt_start,
-        dt_end: dt_end
-      },
-      success: function(obj) {
-        $('#error').hide();
-        $('#media-container').html(obj);
+function saveBudget() {
+  var formdata = $('.budget_day').serialize(),
+      budget = $('input[name="budgetid"]').val();
 
-        $preloader.hide();
-        $submit_button.show();
-        $success.show();
-      },
-      error: function (error) {
-        console.log(error.responseJSON);
-        var error = error.responseJSON.description;
-
-        $('#error').show().html(error);
-
-        $preloader.hide();
-        $submit_button.show();
-        $success.hide();
-      }
-    });
+  $.ajax({
+    url: "/budget/save/",
+    type: "POST",
+    data: formdata,
+    success: function(data) {
+      $('.content').html(data);
+      // Смена страницы
+      window.history.pushState('', '', '/budget/show/'+budget+'/');
+    },
+    error: function (error) {
+      console.log(error);
+    }
   });
 }
 
@@ -258,16 +214,41 @@ function uploadMediaInsta() {
   });
 }
 
-function sendAjax() {
-  
-}
 
 /**
- * Вставляет текст из буфера обмена
- * @param id
+ * Отправка AJAX-запроса
+ * @param params - данные для отправки
+ * @param url - адорес для передачи данных
+ * @param success - блок в котором будет помещен результат запроса
+ * @param submit_button - кнопка
+ * @param preloader - блок выодится пока происходит ожидание ответа
+ * @param media_container - блок в котором будет выведен ответ
+ * @param error - блок в котором будут выведены ошибки
  */
-function pasteClipboard(id) {
-
+function sendAjax(params, url, $success, $submit_button, $preloader, $media_container, $error) {
+  $success.hide();
+  $submit_button.hide();
+  $preloader.fadeIn(function(){
+    $.ajax({
+      url: url,
+      data: params,
+      success: function(obj) {
+        $error.hide();
+        $media_container.html(obj);
+        $success.show();
+      },
+      error: function (error) {
+        console.log(error.responseJSON);
+        var error = error.responseJSON.description;
+        $error.show().html(error);
+        $success.hide();
+      },
+      complete: function() {
+        $preloader.hide();
+        $submit_button.show();
+      }
+    });
+  });
 }
 
 /**
@@ -335,5 +316,12 @@ function removeMedia(id, el) {
     error: function(error) {
       console.log(error);
     }
+  });
+}
+
+function update_calendar(el, month, name) {
+  $.get("/blocks/blockSetDate/", { month: month, name: name })
+  .done(function(data) { 
+    $(el).parents('.shadow-page').html(data);
   });
 }

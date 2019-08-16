@@ -2,6 +2,8 @@
 
 class Controller_Blocks extends Controller {
   public static function blockSetDate($params = array()) {
+    set_time_limit(2);
+
     $months_title = array(
       'Январь',
       'Февраль',
@@ -17,12 +19,22 @@ class Controller_Blocks extends Controller {
       'Декабрь',
     );
 
-    $month = date('n'); // Порядковый номер месяца без ведущего нуля
-    $year = date('Y'); // Порядковый номер года, 4 цифры
+    $month = Request::getInt('month');
+    $name = Request::getStr('name');
+    if (!empty($month)) {
+      $ajax = true;
+      $desc = '';
+    } else {
+      $month = date('n'); // Порядковый номер месяца без ведущего нуля
+      $name = $params['name'];
+      $desc = $params['desc'];
+    }
     
-    $days_month = date('t'); // Количество дней в указанном месяце
-
+    $year = date('Y'); // Порядковый номер года, 4 цифры
+    $unix = mktime(0, 0, 0, $month, 1, $year);
+    $days_month = date('t', $unix); // Количество дней в указанном месяце
     $date_array = array();
+
     for ($i = 1; $i <= $days_month; $i++) {
       // Дата в Unix-формате
       $unix = mktime(0, 0, 0, $month, $i, $year);
@@ -47,8 +59,10 @@ class Controller_Blocks extends Controller {
 
       // Если последнее число месяца не конец недели, доставляем даты из следующего месяца
       if ($i == $days_month && $snd != 7) {
+        $unix_temp = $unix;
+
         do {
-          $unix_temp = $unix + (60*60*24);
+          $unix_temp = $unix_temp + (60*60*24);
           $snd_temp = date('N', $unix_temp);
 
           $key = date("d-m-Y", $unix_temp);
@@ -56,15 +70,27 @@ class Controller_Blocks extends Controller {
         } while ($snd_temp!=7);
       }
     }
-    //print_array($date_array);
 
     $view = new View();
-    $view->add('name', $params['name']);
-    $view->add('desc', $params['desc']);
+    $view->add('name', $name);
+    $view->add('desc', $desc);
     $view->add('date_array', $date_array);
-    $view->add('month_title', $months_title[$month-1]);
+    $view->add('months_title', $months_title);
+
+    $prev_month = ($month - 1 == 0) ? 12 : $month - 1;
+    $next_month = ($month + 1 == 13) ? 1 : $month + 1;
+    $view->add('year', $year);
+    $view->add('month', $month);
+    $view->add('prev_month', $prev_month);
+    $view->add('next_month', $next_month);
     $view->add('current_day', date("d-m-Y"));
     $view->template = 'blocks/set-date.tpl';
+
+    if (!empty($ajax)) {
+      $view->template = 'blocks/calendar.tpl';
+      $templates = $view->render();
+      ajax($templates);
+    }
 
     return $view->render();
   }

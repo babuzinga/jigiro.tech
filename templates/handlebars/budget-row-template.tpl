@@ -1,0 +1,27 @@
+{literal}
+  <script id="budget-row-template" type="text/x-handlebars-template">
+    <tr>
+      <td></td>
+      <td>
+          <input 
+            type="text" 
+            placeholder="Расходы"
+            class="form-text" 
+            value=""
+            name="budget_where_{{dt}}[]"
+          >
+        </td>
+      <td>&nbsp;&nbsp;-&nbsp;&nbsp;</td>
+      <td>
+        <input 
+          type="text" 
+          placeholder="Сумма"
+          value="" 
+          class="form-text" 
+          name="budget_amount_{{dt}}[]"
+        >
+      </td>
+      <td></td>
+    </tr>
+  </script>
+{/literal}

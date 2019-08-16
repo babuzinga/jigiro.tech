@@ -12,7 +12,6 @@
     <br/>
 
     <form onsubmit="uploadMediaInsta(); return false;">
-      {*<div id="paste_clipboard" onclick="pasteClipboard('instagram_media_page_url')">Вставить из буфера</div>*}
       <input
         type="text"
         placeholder="Ссылка на пост в Instagram"
