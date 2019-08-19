@@ -2,15 +2,23 @@
 
 <section>
   <div class="content">
-    <p>
-      Составления бюджета
-    </p>
+    {if !empty($budget_save)}
+      <p>
+        Сохраненные
+        {foreach from=$budget_save key=key item=item}
+          <br/><a href="/budget/show/{$item['hash']}/">{$item.dt_start|date_format:"%d-%m-%Y"} - {$item.dt_end|date_format:"%d-%m-%Y"}</a> - Удалить
+        {/foreach}
+      </p>
+      <br/>
+    {/if}
 
-    <br/>
+    <form onsubmit="buildBudget(); return false;" id="build-budget">
+      <h2>График расходов</h2>
 
-    <form onsubmit="buildBudget(); return false;">
-      {myblock handler="Controller_Blocks.blockSetDate" name='dt_start' desc='Выберите начало периода'}
-      {myblock handler="Controller_Blocks.blockSetDate" name='dt_end' desc='Выберите конец периода'}
+      <div class="budget-period">
+        {myblock handler="Controller_Blocks.blockSetDate" name='dt_start' desc='Выберите начало периода'}
+        {myblock handler="Controller_Blocks.blockSetDate" name='dt_end' desc='Выберите конец периода'}
+      </div>
 
       <div id="error" class="error hidden"></div>
       <button 
@@ -23,7 +31,7 @@
 
     <br/>
 
-    {include file="blocks/ajax-response.tpl"}
+    {include file="blocks/preloader.tpl"}
   </div>
 
   {include file="handlebars/variable-row-template.tpl"}

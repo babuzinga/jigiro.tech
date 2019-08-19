@@ -21,11 +21,16 @@ class Controller_Blocks extends Controller {
 
     $month = Request::getInt('month');
     $name = Request::getStr('name');
+
+    $current_day = date("d-m-Y");
     if (!empty($month)) {
       $ajax = true;
       $desc = '';
     } else {
-      $month = date('n'); // Порядковый номер месяца без ведущего нуля
+      $current_day_unix = !empty($params['value']) ? $params['value'] : time();
+      $current_day = date("d-m-Y", $current_day_unix);
+
+      $month = date('n', $current_day_unix); // Порядковый номер месяца без ведущего нуля
       $name = $params['name'];
       $desc = $params['desc'];
     }
@@ -83,7 +88,7 @@ class Controller_Blocks extends Controller {
     $view->add('month', $month);
     $view->add('prev_month', $prev_month);
     $view->add('next_month', $next_month);
-    $view->add('current_day', date("d-m-Y"));
+    $view->add('current_day', $current_day);
     $view->template = 'blocks/set-date.tpl';
 
     if (!empty($ajax)) {

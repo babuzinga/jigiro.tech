@@ -108,11 +108,11 @@ table.v-blind {
   thead td::after {
     content: '[\00A0+\00A0]';
     display: block;
-    width: 20px;
+    width: 25px;
     height: 25px;
-    text-align: center;
+    text-align: left;
     position: absolute;
-    right: 10px;
+    right: 3px;
     top: 4px;
     cursor: pointer;
   }
@@ -260,7 +260,7 @@ div.date-select {
       vertical-align: middle;
       width: 200px;
     }
-    td.value {
+    td.data-value {
       background-color: @background_section;
       min-width: 100px;
       vertical-align: middle;
@@ -269,7 +269,7 @@ div.date-select {
       border-radius: 3px;
       display: inline-block;
     }
-    td.value:hover {
+    td.data-value:hover {
       cursor: pointer;
       border-color: @color_design_dark;
       color: @color_design_dark;

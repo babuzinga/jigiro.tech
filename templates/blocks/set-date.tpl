@@ -4,7 +4,7 @@
   <table>
   <tr>
     {if !empty($desc)}<td class="desc">{$desc}:</td>{/if}
-    <td class="value none-select" data-name="{$name}">{$current_day}</td>
+    <td class="data-value none-select" data-name="{$name}">{$current_day}</td>
   </tr>
   </table>
 

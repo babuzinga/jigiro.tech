@@ -1,4 +1,6 @@
 ﻿$(document).ready(function() {
+  var $main = $('main');
+
   var timing = window.performance.timing,
       gen_time_html = ((timing.responseEnd - timing.connectStart) / 1000).toFixed(4);
 
@@ -6,28 +8,27 @@
   $('.preview-image').on('load', function() { lazyLoad($(this)); });
   
   var $date_select,
-      $td_value = $('.date-select').find('td.value'),
-      $li_dt = $('.date-select').find('li'),
       dt_value = 0,
       dt_name = 0;
 
-  $td_value.click(function(){ 
-    dt_name = $(this).data('name');
+  $main.on('click', 'td.data-value', function(el) { 
+    dt_name = $(el.currentTarget).data('name');
     $('.date-select.date-'+dt_name).find('.shadow-page').fadeIn(); 
   });
-  $('.date-select').on('click', 'li', function(el) {
+
+  $main.on('click', 'li.dvc', function(el) {
     dt_value = el.currentTarget.dataset.value;
     dt_name = el.currentTarget.dataset.name;
 
     $date_select = $('.date-select.date-'+dt_name);
-    $date_select.find('td.value').html(dt_value);
+    $date_select.find('td.data-value').html(dt_value);
     $date_select.find('li').removeClass('current');
     $date_select.find('input').val(dt_value);
     $(el.currentTarget).addClass('current');
     $('.shadow-page').fadeOut();
   });
 
-  var $main = $('main');
+  
   $main.on('click', '.v-blind thead tr', function() { $(this).parents('table').toggleClass('down'); });
   $main.on('click', '.close-shadow-page', function() { $('.shadow-page').fadeOut(); });
 });
@@ -94,7 +95,7 @@ function buildBudget() {
     dt_end: dt_end
   };
 
-  sendAjax(params, "/budget/build/", $('#success'), $('#submit_button'), $('#preloader'), $('#media-container'), $error);
+  sendAjax(params, "/budget/build/", $('#success'), $('#submit_button'), $('#preloader'), $('#build-budget'), $error);
 }
 
 function saveBudget() {

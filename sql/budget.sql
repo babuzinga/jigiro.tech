@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS `budget`;
 CREATE TABLE `budget` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` INT(11) NOT NULL DEFAULT '0',
   `hash` VARCHAR(20) NULL DEFAULT '' COMMENT 'Идентификатор бюджета',
   `dt_start` INT(11) NULL DEFAULT NULL COMMENT 'Дата начала периода',
   `dt_end` INT(11) NULL DEFAULT NULL COMMENT 'Дата окончания периода',

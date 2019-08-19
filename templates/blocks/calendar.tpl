@@ -11,7 +11,7 @@
     <li
       data-value="{$value}"
       data-name="{$name}"
-      class="{if !empty($item.class)}{$item.class}{/if}{if $current_day==$value} current{/if}"
+      class="dvc {if !empty($item.class)} {$item.class}{/if}{if $current_day==$value} current{/if}"
       >{$item.date}
     </li>
   {/foreach}

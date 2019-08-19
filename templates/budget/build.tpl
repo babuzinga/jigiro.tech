@@ -1,27 +1,13 @@
 <form onsubmit="saveBudget(); return false;" class="budget_day">
   <h2>График расходов</h2>
 
-  <br/>
-
   {if !empty($error)}
     <div class="error">
       {$error}
     </div>
   {else}
-    {* Сохранение изменении *}
-    <button 
-      type="button" 
-      class="button" 
-      id="submit_button" 
-      onclick="saveBudget()"
-      >
-      Сохранить
-    </button>
-
     {* Скрытые значения Бюджета *}
     <input type="hidden" value="{$budget_data.hash}" name="hash">
-    <input type="hidden" value="{$budget_data.dt_start}" name="dt_start">
-    <input type="hidden" value="{$budget_data.dt_end}" name="dt_end">
     <input type="hidden" value="{$budget_data.days}" name="days">
     <input type="hidden" value="{$budget_data.amount}" name="amount">
     <input type="hidden" value="{$budget_data.balance}" name="balance">
@@ -29,9 +15,8 @@
 
     {* Период *}
     <div class="budget-period">
-      {$budget_data.dt_start|date_format:"%d-%m-%Y"}
-      -
-      {$budget_data.dt_end|date_format:"%d-%m-%Y"}
+      {myblock handler="Controller_Blocks.blockSetDate" name='dt_start' desc='Начало периода' value=$budget_data.dt_start}
+      {myblock handler="Controller_Blocks.blockSetDate" name='dt_end' desc='Конец периода' value=$budget_data.dt_end}
     </div>
 
     {* Источники бюджета *}

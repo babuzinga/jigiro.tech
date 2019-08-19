@@ -2,7 +2,13 @@
 
 class Controller_Budget extends Controller {
   public function index() {
+    $cu = getCurrentUser();
+    if (!$cu) return View::error404();
+
+    $budget_save = DB::getRows('SELECT hash, dt_start, dt_end FROM budget WHERE user_id = ?i', $cu->id);
+
     $view = new View();
+    $view->add('budget_save', $budget_save);
     $view->template = 'budget/index.tpl';
 
     return $view->render();
@@ -30,12 +36,12 @@ class Controller_Budget extends Controller {
         'source'    => 0,                 // Источники дохода
         'costs'     => 0,                 // Источники расхода
       );
-
-      $budget_data['days'] = floor(($budget_data['dt_end'] - $budget_data['dt_start']) / (60 * 60 * 24)) + 1;
     } else {
       $budget_data['source'] = unserialize($budget_data['source']);
       $budget_data['costs'] = unserialize($budget_data['costs']);
     }
+
+    $budget_data['days'] = floor(($budget_data['dt_end'] - $budget_data['dt_start']) / (60 * 60 * 24)) + 1;
 
     $error = '';
     $budget_source = $budget_costs = array();
@@ -108,16 +114,23 @@ class Controller_Budget extends Controller {
   }
 
   public function save() {
+    $cu = getCurrentUser();
     $data = empty($_POST) ? false : $_POST;
-    if (empty($data)) ajax('error');
+    if (empty($data) || !$cu) ajax('error');
 
-    $budget_data = array();
+    $budget_data = array('user_id' => $cu->id);
     $costs = $costs_temp = 0;
     // -------------------------------------------------------------------------------- //
     foreach ($data as $key => $item) {
-      // Хэш / Дата начало и конец периода / Количество дней / Сумма / Баланс / Затраты
-      if (in_array($key, array('hash', 'dt_start', 'dt_end', 'days', 'amount', 'balance', 'expense'))) {
+      // Хэш / Количество дней / Сумма / Баланс / Затраты
+      if (in_array($key, array('hash', 'days', 'amount', 'balance', 'expense'))) {
         $budget_data[$key] = $data[$key];
+        continue;
+      }
+
+      // Дата начало и конец периода
+      if (in_array($key, array('dt_start', 'dt_end'))) {
+        $budget_data[$key] = strtotime($data[$key]);
         continue;
       }
 
@@ -165,6 +178,9 @@ class Controller_Budget extends Controller {
   }
 
   public function show() {
+    $cu = getCurrentUser();
+    if (!$cu) return View::error404();
+
     // Если не передан идентификатор Бюджета или данные по нему не найдены
     $budget = $this->params[0];
     if (empty($budget)) return View::error404();
