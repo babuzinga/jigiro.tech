@@ -17,7 +17,7 @@ class Core {
 
   public function __construct() {
     // Чтение основного конфигурационного файла
-    $this->config = parse_ini_file("/config/config.ini", true);
+    $this->config = parse_ini_file(BASE_DIR . "/config/config.ini", true);
   }
 
   // array_shift - Извлекает первое значение массива array и возвращает его, сокращая размер array на один элемент. -> $result = array_splice($result, 1, count($result));
