@@ -8,7 +8,7 @@
             placeholder="Источник"
             class="form-text" 
             value=""
-            name="budget_name_source[]"
+            name="source_name[]"
           >
         </td>
       <td>&nbsp;&nbsp;-&nbsp;&nbsp;</td>
@@ -18,7 +18,7 @@
           placeholder="Сумма"
           value="" 
           class="form-text" 
-          name="budget_amount_source[]"
+          name="source_amount[]"
         >
       </td>
       <td></td>

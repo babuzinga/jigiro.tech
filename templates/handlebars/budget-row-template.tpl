@@ -8,7 +8,7 @@
             placeholder="Расходы"
             class="form-text" 
             value=""
-            name="budget_where_{{dt}}[]"
+            name="costs_name__{{dt}}[]"
           >
         </td>
       <td>&nbsp;&nbsp;-&nbsp;&nbsp;</td>
@@ -18,7 +18,7 @@
           placeholder="Сумма"
           value="" 
           class="form-text" 
-          name="budget_amount_{{dt}}[]"
+          name="costs_amount__{{dt}}[]"
         >
       </td>
       <td></td>

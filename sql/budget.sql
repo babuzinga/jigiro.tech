@@ -1,10 +1,15 @@
 DROP TABLE IF EXISTS `budget`;
 CREATE TABLE `budget` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `budget_id` VARCHAR(20) NULL DEFAULT '' COMMENT 'идентификатор',
-  `budget_data` TEXT NULL DEFAULT '' COMMENT 'Данные',
-  `budget_dt_start` INT(11) NULL DEFAULT NULL,
-  `budget_dt_end` INT(11) NULL DEFAULT NULL,
+  `hash` VARCHAR(20) NULL DEFAULT '' COMMENT 'Идентификатор бюджета',
+  `dt_start` INT(11) NULL DEFAULT NULL COMMENT 'Дата начала периода',
+  `dt_end` INT(11) NULL DEFAULT NULL COMMENT 'Дата окончания периода',
+  `days` INT(11) NULL DEFAULT NULL COMMENT 'Продолжительность',
+  `amount` INT(11) NULL DEFAULT NULL COMMENT 'Сумма',
+  `balance` INT(11) NULL DEFAULT NULL COMMENT 'Остаток',
+  `expense` FLOAT NULL DEFAULT NULL COMMENT 'Лимит в день',
+  `source` TEXT NULL DEFAULT '' COMMENT 'Источники дохода',
+  `costs` TEXT NULL DEFAULT '' COMMENT 'Источники расхода',
   PRIMARY KEY (`id`)
 )
 COMMENT='бюджет'

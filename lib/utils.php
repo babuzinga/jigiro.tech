@@ -91,6 +91,30 @@ function checkDirs($fn) {
   umask($oldumask);
 }
 
+/**
+ * Генеротор случайного набора значений
+ */
+function getRandomSet($len = 6) {
+	$arr = array(
+			'a','b','c','d','e','f',
+			'g','h','i','j','k',
+			'm','n','p','r','s',
+			't','u','v','x','y','z',
+			'A','B','C','D','E','F',
+			'G','H','J','K','L',
+			'M','N','P','R','S',
+			'T','U','V','X','Y','Z',
+			'2','3','4','5','6',
+			'7','8','9');
+	$pass = "";
+	for ($i = 0; $i < $len; $i++) {
+		$index = rand(0, count($arr) - 1);
+		$pass .= $arr[$index];
+	}
+
+	return $pass;
+}
+
 function Redirect($url, $code = 302) {
   if (substr($url, 0, 5) != 'http:' && substr($url, 0, 6) != 'https:') $url = PROTOCOL . HOST_NAME . $url;
   header("Location: $url", true, $code);

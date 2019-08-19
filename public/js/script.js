@@ -99,16 +99,19 @@ function buildBudget() {
 
 function saveBudget() {
   var formdata = $('.budget_day').serialize(),
-      budget = $('input[name="budgetid"]').val();
+      hash = $('input[name="hash"]').val();
 
   $.ajax({
     url: "/budget/save/",
     type: "POST",
     data: formdata,
     success: function(data) {
+      //console.log(data);
+      
       $('.content').html(data);
       // Смена страницы
-      window.history.pushState('', '', '/budget/show/'+budget+'/');
+      window.history.pushState('', '', '/budget/show/'+hash+'/');
+      
     },
     error: function (error) {
       console.log(error);
