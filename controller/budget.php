@@ -3,12 +3,10 @@
 class Controller_Budget extends Controller {
   public function index() {
     $cu = getCurrentUser();
-    if (!$cu) return View::error404();
-
-    $budget_save = DB::getRows('SELECT hash, dt_start, dt_end FROM budget WHERE user_id = ?i', $cu->id);
+    if (!$cu) return View::error401();
 
     $view = new View();
-    $view->add('budget_save', $budget_save);
+    $view->add('budget_save', DB::getRows('SELECT name, hash, dt_start, dt_end FROM budget WHERE user_id = ?i', $cu->id));
     $view->template = 'budget/index.tpl';
 
     return $view->render();
@@ -17,183 +15,114 @@ class Controller_Budget extends Controller {
   /**
    * Построение формы
    */
-  public function build($budget_data = false) {
-    if (empty($budget_data)) {
-      // Перевод в unix-формат Дат начала и окончания периода
-      $first_day = Request::getStr('dt_start');
-
-      $dt_start_unix = strtotime(Request::getStr('dt_start'));
-      $dt_end_unix = strtotime(Request::getStr('dt_end'));
-
-      $budget_data = array(
-        'hash'      => getRandomSet(20),  // Идентификатор бюджета
-        'dt_start'  => $dt_start_unix,    // Дата начала периода
-        'dt_end'    => $dt_end_unix,      // Дата окончания периода
-        'days'      => 0,                 // Продолжительность
-        'amount'    => 0,                 // Сумма
-        'balance'   => 0,                 // Остаток
-        'expense'   => 0,                 // Лимит в день
-        'source'    => 0,                 // Источники дохода
-        'costs'     => 0,                 // Источники расхода
-      );
-    } else {
-      $budget_data['source'] = unserialize($budget_data['source']);
-      $budget_data['costs'] = unserialize($budget_data['costs']);
-    }
-
-    $budget_data['days'] = floor(($budget_data['dt_end'] - $budget_data['dt_start']) / (60 * 60 * 24)) + 1;
-
-    $error = '';
-    $budget_source = $budget_costs = array();
-
-    // Дата начала периода, не должна превышает дату его завершения
-    if ($dt_start_unix > $dt_end_unix) {
-      $error = 'Дата начала периода, превышает дату его завершения';
-    } else {
-      // ----------------------------------------------------------- //
-      // Формирование массива данных по доходам
-      if (!empty($budget_data['source'])) {
-        foreach ($budget_data['source'] as $item) {
-          $info = explode('::', $item);
-          $budget_source[] = array(
-            'name'    => $info[0],
-            'amount'  => $info[1],
-          );
-        }
-      } else {
-        $budget_source[] = array(
-          'name'      => '',
-          'amount'    => '',
-        );
-      }
-      // ----------------------------------------------------------- //
-      // Формирование массива данных по расходам
-      $dt_start = $budget_data['dt_start'];
-      for ($i = 1; $i <= $budget_data['days']; $i++) {
-        $day = date("d-m-Y", $dt_start);
-        $budget_costs[$day] = array();
-
-        if (!empty($budget_data['costs'][$day]) && count($budget_data['costs'][$day]) > 1) {
-          foreach ($budget_data['costs'][$day] as $key => $item) {
-            if ($key === '_total') continue;
-
-            $info = explode('::', $item);
-            $budget_costs[$day][] = array(
-              'name'    => $info[0],
-              'amount'  => $info[1],
-            );
-          }
-        } else {
-          $budget_costs[$day][] = array(
-            'name'      => '',
-            'amount'    => '',
-          );
-        }
-
-        $dt_start = $dt_start + (60 * 60 * 24);
-      }
-      // ----------------------------------------------------------- //
-    }
+  public function build($budget_hash = false) {
+    $cu = getCurrentUser();
+    if (!$cu) return View::error401();
     
-    //print_array($budget_costs);
+    $budget = new Model_Budget();
+    if (empty($budget_hash)) {
+      $budget->dt_start = strtotime(Request::getStr('dt_start'));
+      $budget->dt_end = strtotime(Request::getStr('dt_end'));
+    } else {
+      $budget->getBy('hash', $budget_hash);
+    }
+    $budget->calculateLenght();
+    //print_array($budget);
+    
+    // Дата начала периода, не должна превышает дату его завершения
+    if ($budget->dt_start > $budget->dt_end) {
+      $error = 'Дата начала периода, превышает дату его завершения';
+    }
 
     $view = new View();
-
-    $view->add('budget_data', $budget_data);
-    $view->add('budget_source', $budget_source);
-    $view->add('budget_costs', $budget_costs);
+    $view->add('budget', $budget);
     $view->add('current_day', date("d-m-Y"));
-    
-    $view->add('error', $error);
+    $view->add('error', !empty($error) ? $error : false);
     $view->template = 'budget/build.tpl';
     $render = $view->render();
 
-    if (!empty($budget_data)) return $render;
+    if (!empty($budget_hash)) return $render;
 
     ajax($render);
   }
 
+  /**
+   * Сохранение Бюджета
+   * ------------------
+   */
   public function save() {
     $cu = getCurrentUser();
     $data = empty($_POST) ? false : $_POST;
     if (empty($data) || !$cu) ajax('error');
 
-    $budget_data = array('user_id' => $cu->id);
-    $costs = $costs_temp = 0;
-    // -------------------------------------------------------------------------------- //
-    foreach ($data as $key => $item) {
-      // Хэш / Количество дней / Сумма / Баланс / Затраты
-      if (in_array($key, array('hash', 'days', 'amount', 'balance', 'expense'))) {
-        $budget_data[$key] = $data[$key];
-        continue;
-      }
+    $budget = new Model_Budget();
+    $hash = Request::postVars(array('name', 'hash', 'dt_start', 'dt_end', 'days', 'amount', 'balance', 'expense'));
+    $hash['dt_start'] = strtotime($hash['dt_start']);
+    $hash['dt_end'] = strtotime($hash['dt_end']);
 
-      // Дата начало и конец периода
-      if (in_array($key, array('dt_start', 'dt_end'))) {
-        $budget_data[$key] = strtotime($data[$key]);
-        continue;
-      }
+    $budget->getBy('hash', $hash['hash']);
+    if (!$budget->id) $hash['user_id'] = $cu->id;
+    $budget->addFromHash($hash);
+    $budget->setSourceData($_POST);
+    $budget->setCostsData($_POST);
+    //print_array($budget, 1);
 
-      // Источник - source
-      if ($key == 'source_name') {
-        $amount = 0;
-        foreach($item as $key1 => $subitem) {
-          $amount += $data['source_amount'][$key1];
-          $budget_data['source'][] = $data['source_name'][$key1] . "::" . $data['source_amount'][$key1];
-        }
-      }
-      // Расходы - costs
-      if (strpos($key, 'costs_name__') !== false) {
-        $d = explode('__', $key);
-        $d = $d[1];
-        $costs_temp = 0;
-        foreach($item as $key1 => $subitem) {
-          $costs_temp += $data['costs_amount__'.$d][$key1];
-          $budget_data['costs'][$d][] = $data['costs_name__'.$d][$key1] . "::" . $data['costs_amount__'.$d][$key1];
-        }
-        $costs += $costs_temp;
-        $budget_data['costs'][$d]['_total'] = $costs_temp;
-      }
-    }
+    $budget->save();
 
-    $budget_data['amount']  = $amount;
-    $budget_data['balance'] = $amount - $costs;
-    $budget_data['expense'] = $amount / $budget_data['days'];
-
-    // -------------------------------------------------------------------------------- //
-
-    // Вычисление затрат в день
-    $budget_data['expense'] = round($budget_data['amount'] / $budget_data['days'], 2);
-    $budget_data['source']  = serialize($budget_data['source']);
-    $budget_data['costs']   = serialize($budget_data['costs']);
-
-    $check = DB::scalarSelect('SELECT id FROM budget WHERE hash = ?', $budget_data['hash']);
-    if (!empty($check))
-      DB::update('budget', $check, $budget_data);
-    else
-      DB::insert('budget', $budget_data);
-
-    $render = $this->build($budget_data);
+    $render = $this->build($budget->hash);
     ajax($render);
   }
 
+  /**
+   * Показать Бюджет
+   * ---------------
+   */
   public function show() {
     $cu = getCurrentUser();
-    if (!$cu) return View::error404();
+    if (!$cu) return View::error401();
 
     // Если не передан идентификатор Бюджета или данные по нему не найдены
     $budget = $this->params[0];
     if (empty($budget)) return View::error404();
 
-    $budget_data = DB::singleRow('SELECT * FROM budget WHERE hash=?', $budget);
-    if (empty($budget_data)) return View::error404();
+    // Проверка что Бюджет принадлежит текущему пользователю
+    $budget_hash = DB::scalarSelect('SELECT hash FROM budget WHERE hash=? AND user_id=?i', $budget, $cu->id);
+    if (empty($budget_hash)) return View::error404();
 
-    $render = $this->build($budget_data);
+    $render = $this->build($budget_hash);
 
     $view = new View();
     $view->add('render', $render);
     $view->template = 'budget/show.tpl';
 
     return $view->render();
+  }
+
+  /**
+   * Удаление Бюджета
+   * ----------------
+   */
+  public function delete() {
+    $cu = getCurrentUser();
+    if (!$cu) return View::error401();
+
+    // Если не передан идентификатор Бюджета или данные по нему не найдены
+    $budget = $this->params[0];
+    if (empty($budget)) return View::error404();
+
+    // Проверка что Бюджет принадлежит текущему пользователю
+    $budget_data = DB::singleRow('SELECT * FROM budget WHERE hash=? AND user_id=?i', $budget, $cu->id);
+    if (empty($budget_data)) return View::error404();
+
+    $confirmation = Request::getStr('c');
+    if (empty($confirmation)) {
+      $desc = 'Вы уверены что хотите удалить Бюджет?';
+      $confirmed = '';
+      $rejected = '';
+      return View::confirmation_page($desc, $confirmed, $rejected);
+    } else {
+      DB::delete('budget', 'id = '.$budget_data['id']);
+      Redirect('/b/');
+    }
   }
 }

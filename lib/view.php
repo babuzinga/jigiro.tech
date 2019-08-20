@@ -74,7 +74,22 @@ class View {
 
     $view = new View();
     $view->add('reason', (DEV_MODE && $reason) ? $reason : $standart);
-    $view->template = 'templates/errors/404.tpl';
+    $view->template = 'errors/404.tpl';
+
+    return $view->render();
+  }
+
+  /**
+   * Универсальная страница для подтверждения какого-либо действия
+   * -------------------------------------------------------------
+   * 
+   */
+  public static function confirmation_page($desc, $confirmed, $rejected) {
+    $view = new View();
+    $view->add('desc', $desc);
+    $view->add('confirmed', $confirmed);
+    $view->add('rejected', $rejected);
+    $view->template = 'page/confirmation.tpl';
 
     return $view->render();
   }

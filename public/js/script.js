@@ -66,6 +66,7 @@ function addValueRow(item, row, obj) {
 
 /**
  * Отправка и получения запроса curl 
+ * ---------------------------------
  */
 function sendRequestCurl() {
   var $error = $('#error'),
@@ -76,11 +77,20 @@ function sendRequestCurl() {
 
   params = { url_request: url_request };
   
-  sendAjax(params, "/api/send-request-curl/", $('#success'), $('#submit_button'), $('#preloader'), $('#media-container'), $error);
+  sendAjax(
+    params, 
+    "/api/send-request-curl/", 
+    $('#success'), 
+    $('#submit_button'), 
+    $('#preloader'), 
+    $('#media-container'), 
+    $error
+  );
 }
 
 /**
- Построить расчет затрат
+ * Построить расчет затрат
+ * -----------------------
  */
 function buildBudget() {
   var $error = $('#error'),
@@ -95,11 +105,23 @@ function buildBudget() {
     dt_end: dt_end
   };
 
-  sendAjax(params, "/budget/build/", $('#success'), $('#submit_button'), $('#preloader'), $('#build-budget'), $error);
+  sendAjax(
+    params,               // Данные для отправки
+    "/budget/build/",     // Url на который переаются данные
+    $('#success'),        // 
+    $('#submit_button'),  // Кнопка для блокировки
+    $('#preloader'),      // Идентификатор блока загрузчика
+    $('#build-budget'),   // Идентификатор блока в который будет выведен ответ
+    $error                // Идентификатор блока в который будет выведена ошибка
+  );
 }
 
+/**
+ * Сохранение данных Бюджета
+ * -------------------------
+ */
 function saveBudget() {
-  var formdata = $('.budget_day').serialize(),
+  var formdata = $('.budget-day').serialize(),
       hash = $('input[name="hash"]').val();
 
   $.ajax({
@@ -122,6 +144,7 @@ function saveBudget() {
 
 /**
  * Подгрузка элементов
+ * -------------------
  * @param url
  * @param element
  */
@@ -170,6 +193,7 @@ function lazyLoad() {
 
 /**
  * Подгружает контент полученый с Instagram
+ * ----------------------------------------
  * @returns {boolean}
  */
 function uploadMediaInsta() {
@@ -221,17 +245,18 @@ function uploadMediaInsta() {
 
 /**
  * Отправка AJAX-запроса
+ * ---------------------
  * @param params - данные для отправки
  * @param url - адорес для передачи данных
- * @param success - блок в котором будет помещен результат запроса
- * @param submit_button - кнопка
- * @param preloader - блок выодится пока происходит ожидание ответа
+ * @param success - блок который будет спрятан на время выполнения запроса
+ * @param submit_button - кнопка для блокировки
+ * @param preloader - блок выводится пока происходит ожидание ответа
  * @param media_container - блок в котором будет выведен ответ
  * @param error - блок в котором будут выведены ошибки
  */
 function sendAjax(params, url, $success, $submit_button, $preloader, $media_container, $error) {
   $success.hide();
-  $submit_button.hide();
+  $submit_button.attr('disabled', true);
   $preloader.fadeIn(function(){
     $.ajax({
       url: url,
@@ -249,7 +274,7 @@ function sendAjax(params, url, $success, $submit_button, $preloader, $media_cont
       },
       complete: function() {
         $preloader.hide();
-        $submit_button.show();
+        $submit_button.attr('disabled', false);
       }
     });
   });
@@ -257,6 +282,7 @@ function sendAjax(params, url, $success, $submit_button, $preloader, $media_cont
 
 /**
  * Копирует текст из переданного элемента (element)
+ * ------------------------------------------------
  * @param element
  */
 function copyToClipboard(element) {
@@ -269,6 +295,7 @@ function copyToClipboard(element) {
 
 /**
  * Сохраняет медиа файл
+ * --------------------
  * @param type
  * @param url
  * @param el
@@ -298,7 +325,8 @@ function saveMedia(type, url, el) {
 }
 
 /**
- * Удаляет медиа файл из альбома пользователя
+ * Удаляет медиа-файл из альбома пользователя
+ * ------------------------------------------
  * @param id
  * @param el
  */
@@ -323,6 +351,13 @@ function removeMedia(id, el) {
   });
 }
 
+/**
+ * Обновления блока с датами месяца календаря
+ * ------------------------------------------
+ * @param {*} el 
+ * @param {*} month 
+ * @param {*} name 
+ */
 function update_calendar(el, month, name) {
   $.get("/blocks/blockSetDate/", { month: month, name: name })
   .done(function(data) { 
