@@ -9,9 +9,8 @@
   <ul>
   {foreach from=$date_array key=value item=item}
     <li
-      data-value="{$value}"
-      data-name="{$name}"
-      class="dvc {if !empty($item.class)} {$item.class}{/if}{if $current_day==$value} current{/if}"
+      onclick="selectDateInCalendar('{$name}', '{$value}', this)"
+      class="{if !empty($item.class)} {$item.class}{/if}{if $current_day==$value} current{/if}"
       >{$item.date}
     </li>
   {/foreach}

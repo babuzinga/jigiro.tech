@@ -6,29 +6,7 @@
 
   $('#debug span').html(gen_time_html);
   $('.preview-image').on('load', function() { lazyLoad($(this)); });
-  
-  var $date_select,
-      dt_value = 0,
-      dt_name = 0;
-
-  $main.on('click', 'td.data-value', function(el) { 
-    dt_name = $(el.currentTarget).data('name');
-    $('.date-select.date-'+dt_name).find('.shadow-page').fadeIn(); 
-  });
-
-  $main.on('click', 'li.dvc', function(el) {
-    dt_value = el.currentTarget.dataset.value;
-    dt_name = el.currentTarget.dataset.name;
-
-    $date_select = $('.date-select.date-'+dt_name);
-    $date_select.find('td.data-value').html(dt_value);
-    $date_select.find('li').removeClass('current');
-    $date_select.find('input').val(dt_value);
-    $(el.currentTarget).addClass('current');
-    $('.shadow-page').fadeOut();
-  });
-
-  
+    
   $main.on('click', '.v-blind thead tr', function() { $(this).parents('table').toggleClass('down'); });
   $main.on('click', '.close-shadow-page', function() { $('.shadow-page').fadeOut(); });
 });
@@ -47,6 +25,21 @@ $(window).on("scroll", function() {
 });
 
 $(window).on("resize", function() {   });
+
+/**
+ * Выбор даты в календаре
+ * @param {*} dt_name 
+ * @param {*} dt_value 
+ * @param {*} el 
+ */
+function selectDateInCalendar(dt_name, dt_value, el) {
+  $ds = $('.date-select.date-'+dt_name);
+  $ds.find('td.data-value').html(dt_value);
+  $ds.find('li').removeClass('current');
+  $ds.find('input').val(dt_value);
+  $(el).addClass('current');
+  $('.shadow-page').fadeOut();
+}
 
 /**
  * Добавление поля для вставки переменной
